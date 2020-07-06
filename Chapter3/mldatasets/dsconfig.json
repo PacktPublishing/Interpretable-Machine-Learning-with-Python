@@ -1,0 +1,122 @@
+{
+    "datasets":[
+        {
+            "name":"cardiovascular-disease", 
+            "source":"Kaggle", 
+            "location":"sulianova/cardiovascular-disease-dataset", 
+            "filenames":"cardio_train.csv",
+            "filetypes":"csv",
+            "target":"cardio",
+            "removecols":["id"],
+            "csvopts":{
+                "sep":";"
+            }
+        },
+        {
+            "name":"airline-delays-and-cancellations-2018", 
+            "source":"Kaggle", 
+            "location":"yuanyuwendymu/airline-delay-and-cancellation-data-2009-2018", 
+            "filenames":"2018.csv",
+            "filetypes":"csv",
+            "target":"CARRIER_DELAY",
+            "removecols":["Unnamed: 27"],
+            "csvopts":{
+                "sep":","
+            }
+        },{
+            "name":"personality-birthorder",
+            "source":"URL",
+            "location":"https://openpsychometrics.org/_rawdata/FBPS-ValidationData.zip",
+            "filenames":"FBPS-ValidationData/FBPS-ValidationData.csv",
+            "filetypes":"csv",
+            "target":["birthpos","birthn"]
+        },
+        {
+            "name":"wine-quality",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv",
+            "filenames":"winequality-red.csv",
+            "filetypes":"csv",
+            "target":"quality"
+        },
+        {
+            "name":"vehicle-fueleconomy", 
+            "source":"URL", 
+            "location":"https://www.fueleconomy.gov/feg/epadata/vehicles.csv.zip",
+            "filenames":"vehicles.csv",
+            "filetypes":"csv",
+            "target":["comb08U", "combA08U"],
+            "csvopts":{
+                "removecols":["barrels08", "barrelsA08", "city08", "city08U", "cityA08", "cityA08U", "cityCD", "cityE", "cityUF", "comb08", "combA08",  "combE", "combinedCD", "combinedUF", "highway08", "highway08U", "highwayA08", "highwayA08U", "highwayCD", "highwayE", "highwayE", "UCity", "UCityA", "UHighway", "UHighwayA"]
+            }
+        },
+        {
+            "name":"ushospital-diabetes",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/00296/dataset_diabetes.zip",
+            "filenames":"dataset_diabetes/diabetic_data.csv",
+            "filetypes":"csv",
+            "target":"readmitted",
+            "csvopts":{
+                "removecols":["weight", "medical_specialty", "payer_code", "encounter_id", "patient_nbr", "admission_type_id", "discharge_disposition_id", "admission_source_id"]
+            }
+        },
+        {
+            "name":"fruits-360", 
+            "source":"Kaggle", 
+            "location":"moltean/fruits",
+            "filenames":["Training/*/*.jpg", "Test/*/*.jpg"],
+            "filesplits":["train", "test"],
+            "filetypes":["img","img"],
+            "target":"fruit=__dirname__"
+        },
+        {
+            "name":"traffic-volume",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/00492/Metro_Interstate_Traffic_Volume.csv.gz",
+            "filenames":"Metro_Interstate_Traffic_Volume.csv",
+            "filetypes":"csv",
+            "target":"traffic_volume"
+        },
+        {
+            "name":"news-fake",
+            "source":"Kaggle",
+            "location":"clmentbisaillon/fake-and-real-news-dataset",
+            "filenames":["True.csv","Fake.csv"],
+            "filetypes":["csv","csv"],
+            "target":"isfake=__filename__"
+        },
+        {
+            "name":"melbourne-housing",
+            "source":"Kaggle",
+            "location":"anthonypino/melbourne-housing-market",
+            "filenames":"Melbourne_housing_FULL.csv",
+            "filetypes":"csv",
+            "target":"price"
+        },
+        {
+            "name":"cc-default",
+            "source":"URL",
+            "location":"http://archive.ics.uci.edu/ml/machine-learning-databases/00350/default of credit card clients.xls",
+            "filenames":"default of credit card clients.xls",
+            "filetypes":"xls",
+            "target":"default.payment.next.month",
+            "xlsopts":{
+                "skiprows":1
+            }
+        },
+        {
+            "name":"chinese-trafficsigns",
+            "source":"URL",
+            "location":["http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Train%20Annotation.zip", "http://www.nlpr.ia.ac.cn/pal/trafficdata/tsrd-train.zip","http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Test%20Annotation.zip", "http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Test.zip"],
+            "filenames":["TsignRecgTrain4170Annotation.txt", "./tsrd-train/*.png", "TsignRecgTest1994Annotation.txt", "./TSRD-Test/*.png"],
+            "filetypes":["csv", "png", "csv", "png"],
+            "filesplits":["train","train", "test", "test"],
+            "target":"class",
+            "csvopts":{
+                "colnames":["__filename__","X1","X2","X3","X4","X5","X6","class","empty"],
+                "removecols":["X1","X2","X3","X4","X5","X6","empty"]
+            }
+        }
+    ]
+}
