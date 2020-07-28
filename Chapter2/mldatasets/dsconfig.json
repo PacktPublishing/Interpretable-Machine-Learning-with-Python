@@ -1,7 +1,19 @@
 {
     "datasets":[
-        {
+         {
             "name":"cardiovascular-disease", 
+            "source":"URL", 
+            "location":"https://raw.githubusercontent.com/caravanuden/cardio/master/cardio_train.csv", 
+            "filenames":"cardio_train.csv",
+            "filetypes":"csv",
+            "target":"cardio",
+            "removecols":["id"],
+            "csvopts":{
+                "sep":";"
+            }
+        },
+        {
+            "name":"cardiovascular-disease_kaggle", 
             "source":"Kaggle", 
             "location":"sulianova/cardiovascular-disease-dataset", 
             "filenames":"cardio_train.csv",

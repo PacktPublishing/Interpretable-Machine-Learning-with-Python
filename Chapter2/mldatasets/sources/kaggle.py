@@ -4,6 +4,7 @@ import warnings
 import sys
 from zipfile import ZipFile
 from ..common import runcmd
+import re
 from .source import Source
 
 class Kaggle(Source):
@@ -50,18 +51,44 @@ class Kaggle(Source):
             if not os.path.exists(dssave_path):
                 os.makedirs(dssave_path)
             location = nkwargs['location']
-            cmd = 'kaggle datasets download '+location+' -p "'+dssave_path+'"'
+            single_file = False
+            single_filename = ""
+            if isinstance(nkwargs['filenames'], str):
+                single_file = True
+                single_filename = nkwargs['filenames']
+            elif isinstance(nkwargs['filenames'], list) and len(nkwargs['filenames']) == 1:
+                single_file = True
+                single_filename = nkwargs['filenames'][0]
+            if single_file:
+                cmd = 'kaggle datasets download '+location+' -f "'+single_filename+'" -p "'+dssave_path+'"'
+            else:
+                cmd = 'kaggle datasets download '+location+' -p "'+dssave_path+'"'
             error, output, numlines = runcmd(cmd, True)
             if not error:
-                dsname = location.split('/')[1]
-                zipfile_path = os.path.join(dssave_path, dsname + '.zip')
-                unzipdir_path = os.path.join(dssave_path, dsname)
-                if os.path.exists(zipfile_path):
-                    with ZipFile(zipfile_path, 'r') as zipObj:
-                        zipObj.extractall(unzipdir_path)
-                        print(zipfile_path + ' uncompressed to ' + unzipdir_path)
-                        nkwargs['path'] = unzipdir_path
+                zipname_match = re.search('Downloading (.*) to |^(.*): Skipping, found more recently modified local copy', output, re.MULTILINE)
+                if zipname_match is not None:
+                    conv = (lambda i: i or '')
+                    zipname = ''.join([conv(i) for i in zipname_match.groups()])
+                    zipfile_path = os.path.join(dssave_path, zipname)
+                    if re.match('.*\.zip$', zipname) is not None:
+                        dsname = location.split('/')[1] 
+                        unzipdir_path = os.path.join(dssave_path, dsname)
+                        if os.path.exists(zipfile_path):
+                            with ZipFile(zipfile_path, 'r') as zipObj:
+                                zipObj.extractall(unzipdir_path)
+                                print(zipfile_path + ' uncompressed to ' + unzipdir_path)
+                                nkwargs['path'] = unzipdir_path
+                        else:
+                            warnings.warn("Zip file not found at "+zipfile_path)
+                    elif single_file and os.path.exists(zipfile_path):
+                        if not os.path.isdir(zipfile_path):
+                            nkwargs['path'] = os.path.dirname(zipfile_path)
+                            nkwargs['filenames'] = zipfile_path.replace
+                        else:
+                            nkwargs['path'] = zipfile_path
+                    else:
+                        warnings.warn("Non-zip file not found at "+zipfile_path)
                 else:
-                    warnings.warn("File not found at "+zipfile_path)
+                    warnings.warn("File not saved at "+dssave_path)
                     
         return nkwargs
