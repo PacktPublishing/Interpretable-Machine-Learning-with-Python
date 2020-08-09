@@ -83,7 +83,10 @@ class Source:
     def parse_csv(self, fpath, csvopts):
         #TODO: add some extra exceptions ~ convert to numpy array perhaps
         print('parsing '+fpath)
-        return pd.read_csv(fpath, **csvopts)
+        if 'usecols' in csvopts:
+            return pd.read_csv(fpath, **csvopts)[csvopts['usecols']]
+        else:
+            return pd.read_csv(fpath, **csvopts)
     
     def prepare(self, **kwargs):
         #TODO use gather and args to split and convert files

@@ -6,7 +6,7 @@ from pathlib import Path
 if (sys.version_info < (3, 0)):
     warnings.warn("mldatasets only supports Python 3 (not 2)!")
 
-__version__ = '0.01.1'
+__version__ = '0.01.3'
 
 from mldatasets.config import init, load
 from mldatasets.common import runcmd

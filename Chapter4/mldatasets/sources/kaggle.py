@@ -81,7 +81,11 @@ class Kaggle(Source):
                         else:
                             warnings.warn("Zip file not found at "+zipfile_path)
                     elif single_file and os.path.exists(zipfile_path):
-                        nkwargs['path'] = zipfile_path
+                        if not os.path.isdir(zipfile_path):
+                            nkwargs['path'] = os.path.dirname(zipfile_path)
+                            nkwargs['filenames'] = zipfile_path.replace
+                        else:
+                            nkwargs['path'] = zipfile_path
                     else:
                         warnings.warn("Non-zip file not found at "+zipfile_path)
                 else:

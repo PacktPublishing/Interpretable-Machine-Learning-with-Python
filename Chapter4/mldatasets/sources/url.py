@@ -38,5 +38,6 @@ class URL(Source):
                 else:
                     warnings.warn("Zip file not found at " + zipfile_path)
             else:
-                nkwargs['path'] = zipfile_path
+                nkwargs['path'] = os.path.dirname(zipfile_path)
+                nkwargs['filenames'] = zipfile_path.rsplit('/', 1)[1]
         return nkwargs
