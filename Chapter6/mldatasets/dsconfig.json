@@ -1,0 +1,172 @@
+{
+    "datasets":[
+        {
+            "name":"cardiovascular-disease", 
+            "source":"URL", 
+            "location":"https://raw.githubusercontent.com/caravanuden/cardio/master/cardio_train.csv", 
+            "filenames":"cardio_train.csv",
+            "filetypes":"csv",
+            "target":"cardio",
+            "removecols":["id"],
+            "csvopts":{
+                "sep":";"
+            }
+        },
+        {
+            "name":"cardiovascular-disease_kaggle", 
+            "source":"Kaggle", 
+            "location":"sulianova/cardiovascular-disease-dataset", 
+            "filenames":"cardio_train.csv",
+            "filetypes":"csv",
+            "target":"cardio",
+            "removecols":["id"],
+            "csvopts":{
+                "sep":";"
+            }
+        },
+        {
+            "name":"airline-delays-and-cancellations-2018_kaggle", 
+            "source":"Kaggle", 
+            "location":"yuanyuwendymu/airline-delay-and-cancellation-data-2009-2018", 
+            "filenames":"2018.csv",
+            "filetypes":"csv",
+            "target":"CARRIER_DELAY",
+            "removecols":["Unnamed: 27"],
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"aa-domestic-delays-2018", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/aa-domestic-delays-2018.csv.zip", 
+            "filenames":"aa-domestic-delays-2018.csv",
+            "filetypes":"csv",
+            "target":"CARRIER_DELAY",
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"personality-birthorder",
+            "source":"URL",
+            "location":"https://openpsychometrics.org/_rawdata/FBPS-ValidationData.zip",
+            "filenames":"FBPS-ValidationData/FBPS-ValidationData.csv",
+            "filetypes":"csv",
+            "target":["birthpos","birthn"],
+            "csvopts":{
+                "sep":"\t"
+            }
+        },
+        {
+            "name":"wine-quality",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv",
+            "filenames":"winequality-red.csv",
+            "filetypes":"csv",
+            "target":"quality"
+        },
+        {
+            "name":"chocolate-bar-ratings", 
+            "source":"Kaggle", 
+            "location":"soroushghaderi/chocolate-bar-2020", 
+            "filenames":"chocolate.csv",
+            "filetypes":"csv",
+            "target":"rating",
+            "removecols":["ref", "Unnamed: 0", "specific_bean_origin_or_bar_name"],
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"arabica-coffee-quality", 
+            "source":"Kaggle", 
+            "location":"volpatto/coffee-quality-database-from-cqi", 
+            "filenames":"arabica_data_cleaned.csv",
+            "filetypes":"csv",
+            "target":"rating",
+            "removecols":["Species", "Owner", "Farm.Name", "Lot.Number", "Mill", "ICO.Number", "Company", "Altitude", "Region", "Producer", "In.Country.Partner", "Owner.1", "Expiration", "Certification.Body", "Certification.Address", "Certification.Contact"],
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"vehicle-fueleconomy", 
+            "source":"URL", 
+            "location":"https://www.fueleconomy.gov/feg/epadata/vehicles.csv.zip",
+            "filenames":"vehicles.csv",
+            "filetypes":"csv",
+            "target":["comb08"],
+            "csvopts":{
+                "usecols":["make", "model", "year", "fuelType", "cylinders", "displ", "eng_dscr", "phevBlended", "atvType", "co2TailpipeGpm", "co2", "ghgScore", "drive", "trany", "trans_dscr", "VClass", "pv4", "lv4", "lv2", "pv2", "hlv", "hpv", "startStop", "tCharger", "comb08"],
+                "dtype":{"make":"object", "model":"object", "year":"int16", "fuelType":"object", "cylinders":"float32", "displ":"float32", "trany":"object", "drive":"object", "eng_dscr":"object", "trans_dscr":"object", "phevBlended":"bool", "co2":"int16", "ghgScore":"int16", "co2TailpipeGpm":"float32", "VClass":"object", "pv4":"int16", "lv4":"int16", "lv2":"int16", "pv2":"int16", "hlv":"int16", "hpv":"int16", "fuelCost08":"int16", "startStop":"object", "tCharger":"object", "atvType":"object", "comb08":"int16"} 
+            }
+        },
+        {
+            "name":"ushospital-diabetes",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/00296/dataset_diabetes.zip",
+            "filenames":"dataset_diabetes/diabetic_data.csv",
+            "filetypes":"csv",
+            "target":"readmitted",
+            "removecols":["weight", "medical_specialty", "payer_code", "encounter_id", "patient_nbr", "admission_type_id", "discharge_disposition_id", "admission_source_id"]
+        },
+        {
+            "name":"fruits-360", 
+            "source":"Kaggle", 
+            "location":"moltean/fruits",
+            "filenames":["Training/*/*.jpg", "Test/*/*.jpg"],
+            "filesplits":["train", "test"],
+            "filetypes":["img","img"],
+            "target":"fruit=__dirname__"
+        },
+        {
+            "name":"traffic-volume",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/00492/Metro_Interstate_Traffic_Volume.csv.gz",
+            "filenames":"Metro_Interstate_Traffic_Volume.csv",
+            "filetypes":"csv",
+            "target":"traffic_volume"
+        },
+        {
+            "name":"news-fake",
+            "source":"Kaggle",
+            "location":"clmentbisaillon/fake-and-real-news-dataset",
+            "filenames":["True.csv","Fake.csv"],
+            "filetypes":["csv","csv"],
+            "target":"isfake=__filename__"
+        },
+        {
+            "name":"melbourne-housing_unusable",
+            "source":"Kaggle",
+            "location":"anthonypino/melbourne-housing-market",
+            "filenames":"Melbourne_housing_FULL.csv",
+            "filetypes":"csv",
+            "target":"price"
+        },
+        {
+            "name":"cc-default",
+            "source":"URL",
+            "location":"http://archive.ics.uci.edu/ml/machine-learning-databases/00350/default of credit card clients.xls",
+            "filenames":"default of credit card clients.xls",
+            "filetypes":"xls",
+            "target":"default.payment.next.month",
+            "xlsopts":{
+                "skiprows":1
+            }
+        },
+        {
+            "name":"chinese-trafficsigns",
+            "source":"URL",
+            "location":["http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Train%20Annotation.zip", "http://www.nlpr.ia.ac.cn/pal/trafficdata/tsrd-train.zip","http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Test%20Annotation.zip", "http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Test.zip"],
+            "filenames":["TsignRecgTrain4170Annotation.txt", "./tsrd-train/*.png", "TsignRecgTest1994Annotation.txt", "./TSRD-Test/*.png"],
+            "filetypes":["csv", "png", "csv", "png"],
+            "filesplits":["train","train", "test", "test"],
+            "target":"class",
+            "csvopts":{
+                "colnames":["__filename__","X1","X2","X3","X4","X5","X6","class","empty"],
+                "removecols":["X1","X2","X3","X4","X5","X6","empty"]
+            }
+        }
+    ]
+}

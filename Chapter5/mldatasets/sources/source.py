@@ -83,7 +83,7 @@ class Source:
     def parse_csv(self, fpath, csvopts):
         #TODO: add some extra exceptions ~ convert to numpy array perhaps
         print('parsing '+fpath)
-        if 'usecols' in csvopts:
+        if 'usecols' in csvopts and isinstance(csvopts['usecols'], (np.ndarray, list)):
             return pd.read_csv(fpath, **csvopts)[csvopts['usecols']]
         else:
             return pd.read_csv(fpath, **csvopts)

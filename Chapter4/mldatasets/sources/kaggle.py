@@ -83,7 +83,7 @@ class Kaggle(Source):
                     elif single_file and os.path.exists(zipfile_path):
                         if not os.path.isdir(zipfile_path):
                             nkwargs['path'] = os.path.dirname(zipfile_path)
-                            nkwargs['filenames'] = zipfile_path.replace
+                            nkwargs['filenames'] = zipfile_path.rsplit('/', 1)[1]
                         else:
                             nkwargs['path'] = zipfile_path
                     else:
