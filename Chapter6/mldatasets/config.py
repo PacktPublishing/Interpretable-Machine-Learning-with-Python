@@ -32,6 +32,7 @@ def init(new_dssave_path = None, new_dsconfig_path = None):
 def load(name=None, **kwargs):
     kparams = locals()['kwargs']
     params = {}
+    dataset = None
     if name is not None:
         for i in range(len(dsconfig['datasets'])):
             if dsconfig['datasets'][i]["name"] == name:
