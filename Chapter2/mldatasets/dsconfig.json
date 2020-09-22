@@ -69,9 +69,21 @@
             "target":"quality"
         },
         {
-            "name":"chocolate-bar-ratings", 
+            "name":"chocolate-bar-ratings_kaggle", 
             "source":"Kaggle", 
             "location":"soroushghaderi/chocolate-bar-2020", 
+            "filenames":"chocolate.csv",
+            "filetypes":"csv",
+            "target":"rating",
+            "removecols":["ref", "Unnamed: 0", "specific_bean_origin_or_bar_name"],
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"chocolate-bar-ratings", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/chocolate-ratings.zip", 
             "filenames":"chocolate.csv",
             "filetypes":"csv",
             "target":"rating",
