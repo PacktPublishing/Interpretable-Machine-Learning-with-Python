@@ -5,6 +5,7 @@ import os
 import pandas as pd
 import numpy as np
 import json
+from mldatasets.common import make_dummies_with_limits, make_dummies_from_dict
 
 class Source:
     
@@ -83,11 +84,27 @@ class Source:
     def parse_csv(self, fpath, csvopts):
         #TODO: add some extra exceptions ~ convert to numpy array perhaps
         print('parsing '+fpath)
-        return pd.read_csv(fpath, **csvopts)
+        if 'usecols' in csvopts and isinstance(csvopts['usecols'], (np.ndarray, list)):
+            return pd.read_csv(fpath, **csvopts)[csvopts['usecols']]
+        else:
+            return pd.read_csv(fpath, **csvopts)
     
     def prepare(self, **kwargs):
+        nkwargs = locals()['kwargs']
+        if 'prepare' in nkwargs and nkwargs['prepare'] and\
+            'prepcmds' in nkwargs and len(nkwargs['prepcmds']):
+            if len(nkwargs['files']) == 1 and isinstance(nkwargs['files'][0]['content'], pd.DataFrame):
+                df = nkwargs['files'][0]['content'].copy()
+                cmds = nkwargs['prepcmds']
+                cmds.insert(0, "df = dfo.copy(deep=True)")
+                cmds.insert(0, "def prep(dfo):")
+                cmds.append("return df")
+                exec("\r\n\t".join(cmds))
+                df = eval("prep(df)")
+                nkwargs['files'][0]['content'] = df.copy()
+                del df
         #TODO use gather and args to split and convert files
-        return kwargs['files'][0]['content']
+        return nkwargs['files'][0]['content']
         
     def gather(self, files):
         #TODO sort and join by group (filesplit, filetype)
