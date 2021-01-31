@@ -185,7 +185,8 @@
             "filenames":["train.csv","test.csv"],
             "filesplits":["train", "test"],
             "filetypes":["csv","csv"],
-            "prepcmds":["df = df.dropna(axis=0)", "df.set_index('CONTROLN', inplace=True)"]
+            "prepcmds":["df = df.dropna(axis=1)", "df.drop(['TARGET_B'], axis=1, inplace=True)", "df.set_index('CONTROLN', inplace=True)"],
+            "target":"TARGET_D"
         },
         {
             "name":"cc-default",
@@ -206,6 +207,24 @@
             "filenames":["True.csv","Fake.csv"],
             "filetypes":["csv","csv"],
             "target":"isfake=__filename__"
+        },
+        {
+            "name":"maskedface-net_thumbs_sampled", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/maskedface-net_thumbs_sampled.zip",
+            "filenames":["train/*/*.jpg", "test/*/*.*g"],
+            "filesplits":["train", "test"],
+            "filetypes":["img", "img"],
+            "target":"__dirname__"
+        },
+        {
+            "name":"maskedface-net_thumbs_complete", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/maskedface-net_thumbs_complete.zip",
+            "filenames":["train/*/*.jpg", "test/*/*.jpg"],
+            "filesplits":["train", "test"],
+            "filetypes":["img", "img"],
+            "target":"__dirname__"
         },
         {
             "name":"melbourne-housing_unusable",

@@ -2,9 +2,11 @@ import sys
 import warnings
 import re
 import os
+import glob
 import pandas as pd
 import numpy as np
 import json
+import cv2
 from mldatasets.common import make_dummies_with_limits, make_dummies_from_dict
 
 class Source:
@@ -41,8 +43,11 @@ class Source:
                         filetype = nkwargs['filetypes'][i]
                         filesplit = nkwargs['filesplits'][i]
                         if re.search('\*', filename) is not None:
-                            #TODO: Multiple files fetch
-                            return nkwargs
+                            filepath = os.path.join(nkwargs['path'], filename)
+                            files = [{'filetype':filetype, 'filesplit':filesplit, 'filename':filename,\
+                                '__dirname__':os.path.basename(os.path.dirname(f)), '__filename__':os.path.basename(f),\
+                                '__filepath__':f} for f in glob.glob(filepath, recursive=True)]
+                            nkwargs['files'].extend(files)
                         else:
                             filepath = os.path.join(nkwargs['path'], filename)
                             if os.path.exists(filepath):
@@ -51,8 +56,7 @@ class Source:
                                 nkwargs['files'].append({'filetype':filetype, 'filesplit':filesplit, 'filename':filename, '__dirname__':dirname, '__filename__':fname, '__filepath__':filepath})
                     del nkwargs['filenames']
                     del nkwargs['filetypes']
-                    del nkwargs['filesplits']
-                    
+                    #del nkwargs['filesplits']
                     print('%s dataset files found in %s folder' % (len(nkwargs['files']), nkwargs['path']))
                     
         return nkwargs
@@ -73,11 +77,17 @@ class Source:
                         del nkwargs['removecols']
                     nkwargs['files'][i]['content'] = self.parse_csv(file['__filepath__'], nkwargs['csvopts'])
                 elif file['filetype'] == 'xls':  
-                    #TODO: create xls handling function
-                    pass
+                    if 'xlsopts' not in nkwargs:
+                        nkwargs['xlsopts'] = {}
+                    if 'removecols' in nkwargs:
+                        removecols = nkwargs['removecols'].copy()
+                        nkwargs['xlsopts']['usecols'] = lambda x: x not in removecols
+                        del nkwargs['removecols']
+                    nkwargs['files'][i]['content'] = self.parse_xls(file['__filepath__'], nkwargs['xlsopts'])
                 elif file['filetype'] == 'img': 
-                    #TODO: create img handling function
-                    pass
+                    if 'imgopts' not in nkwargs:
+                        nkwargs['imgopts'] = {}
+                    nkwargs['files'][i]['content'] = self.parse_img(file['__filepath__'], nkwargs['imgopts'])
                 
         return nkwargs
     
@@ -88,23 +98,88 @@ class Source:
             return pd.read_csv(fpath, **csvopts)[csvopts['usecols']]
         else:
             return pd.read_csv(fpath, **csvopts)
+        
+    def parse_xls(self, fpath, xlsopts):
+        #TODO: add some extra exceptions ~ convert to numpy array perhaps
+        print('parsing '+fpath)
+        if 'usecols' in xlsopts and isinstance(xlsopts['usecols'], (np.ndarray, list)):
+            return pd.read_excel(fpath, **xlsopts)[xlsopts['usecols']]
+        else:
+            return pd.read_excel(fpath, **xlsopts)
+    
+    def parse_img(self, fpath, imgopts):
+        if 'mode' in imgopts and isinstance(imgopts['mode'], (int, np.int8, np.int16, np.int32, np.int64)):
+            mode = imgopts['mode']
+        else:
+            mode = 1
+        if 'space' in imgopts and isinstance(imgopts['space'], (int, np.int8, np.int16, np.int32, np.int64)):
+            space = imgopts['space']
+        else:
+            space = 4
+        icontent = cv2.imread(fpath, mode)
+        icontent = cv2.cvtColor(icontent, space)
+        if 'resize' in imgopts and isinstance(imgopts['resize'], (np.ndarray, list)):
+            icontent = cv2.resize(icontent, tuple(imgopts['resize']))
+        return icontent
     
     def prepare(self, **kwargs):
         nkwargs = locals()['kwargs']
         if 'prepare' in nkwargs and nkwargs['prepare'] and\
-            'prepcmds' in nkwargs and len(nkwargs['prepcmds']):
-            if len(nkwargs['files']) == 1 and isinstance(nkwargs['files'][0]['content'], pd.DataFrame):
-                df = nkwargs['files'][0]['content'].copy()
-                cmds = nkwargs['prepcmds']
-                cmds.insert(0, "df = dfo.copy(deep=True)")
-                cmds.insert(0, "def prep(dfo):")
-                cmds.append("return df")
-                exec("\r\n\t".join(cmds))
-                df = eval("prep(df)")
-                nkwargs['files'][0]['content'] = df.copy()
-                del df
-        #TODO use gather and args to split and convert files
-        return nkwargs['files'][0]['content']
+            'prepcmds' in nkwargs and len(nkwargs['prepcmds']) and\
+            len(nkwargs['files']) and not isinstance(nkwargs['files'][0]['content'], np.ndarray):
+                for i in range(len(nkwargs['files'])):
+                    if isinstance(nkwargs['files'][i]['content'], pd.DataFrame):
+                        df = nkwargs['files'][i]['content'].copy()
+                        cmds = nkwargs['prepcmds'].copy()
+                        cmds.insert(0, "df = dfo.copy(deep=True)")
+                        cmds.insert(0, "def prep(dfo):")
+                        cmds.append("return df")
+                        exec("\r\n\t".join(cmds))
+                        df = eval("prep(df)")
+                        nkwargs['files'][i]['content'] = df.copy()
+                        del df
+        if len(nkwargs['files']) == 1:
+            #TODO use gather and args to split and convert files
+            return nkwargs['files'][0]['content']
+        else:
+            #splits = list(set(i['filesplit'] for i in nkwargs['files']))
+            splits = nkwargs['filesplits']
+            all_contents = []
+            all_labels = []
+            for split in splits:
+                if 'target' in nkwargs:
+                    if nkwargs['files'][0]['filetype'] == 'csv':
+                        contents, labels = list(zip(*[(i['content'].drop(nkwargs['target'], axis=1), i['content'][nkwargs['target']])\
+                                                      for i in nkwargs['files'] if i["filesplit"] == split]))
+                    else:
+                        contents, labels = list(zip(*[(i['content'], i[nkwargs['target']])\
+                                                      for i in nkwargs['files'] if i["filesplit"] == split]))
+                else:
+                    contents = [i['content'] for i in nkwargs['files'] if i["filesplit"] == split]
+                    labels = []
+                if len(labels) and isinstance(labels, (tuple, list)):
+                    labels = np.array(list(labels)).reshape(-1, 1)
+                if len(contents) and isinstance(contents[0], (np.ndarray)):
+                    contents = np.array(contents)
+                    if 'prepare' in nkwargs and nkwargs['prepare'] and 'prepcmds' in nkwargs and len(nkwargs['prepcmds']):
+                        arr = np.copy(contents)
+                        cmds = nkwargs['prepcmds']
+                        #cmds.insert(0, "arr = np.copy(arro)")
+                        cmds.insert(0, "def prep(arr):")
+                        cmds.append("return arr")
+                        exec("\n    ".join(cmds))
+                        contents = eval("prep(arr)")
+                        #contents = np.copy(arr)
+                        del arr
+                if isinstance(contents, (list, tuple)) and len(contents) == 1:
+                    contents = contents[0]
+                if isinstance(labels, (list, tuple)) and len(labels) == 1:
+                    labels = labels[0]
+                if len(contents) > 0:
+                    all_contents.append(contents)
+                if len(labels) > 0:
+                    all_labels.append(labels)
+            return tuple(all_contents + all_labels)
         
     def gather(self, files):
         #TODO sort and join by group (filesplit, filetype)

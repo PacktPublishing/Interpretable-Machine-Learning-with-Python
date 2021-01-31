@@ -88,7 +88,7 @@ def evaluate_class_metrics_mdl(fitted_model, y_train_pred, y_test_prob, y_test_p
     eval_dict['recall_test'] = metrics.recall_score(y_test, y_test_pred, zero_division=0)
     eval_dict['f1_train'] = metrics.f1_score(y_train, y_train_pred, zero_division=0)
     eval_dict['f1_test'] = metrics.f1_score(y_test, y_test_pred, zero_division=0)
-    eval_dict['mcc_train'] =metrics.matthews_corrcoef(y_train, y_train_pred)
+    eval_dict['mcc_train'] = metrics.matthews_corrcoef(y_train, y_train_pred)
     eval_dict['mcc_test'] = metrics.matthews_corrcoef(y_test, y_test_pred)
     eval_dict['roc-auc_test'] = metrics.roc_auc_score(y_test, y_test_prob)
     return eval_dict
@@ -146,8 +146,25 @@ def evaluate_class_mdl(fitted_model, X_train, X_test, y_train, y_test, plot_roc=
     else:
         return y_train_pred, y_test_prob, y_test_pred
 
+def evaluate_multiclass_metrics_mdl(fitted_model, y_test_prob, y_test_pred, y_test, ohe=None):      
+    eval_dict = {}
+    eval_dict['fitted'] = fitted_model
+    eval_dict['probs'] = y_test_prob
+    eval_dict['preds'] = y_test_pred
+    eval_dict['accuracy'] = metrics.accuracy_score(y_test, y_test_pred)
+    eval_dict['precision'] = metrics.precision_score(y_test, y_test_pred, zero_division=0, average='micro')
+    eval_dict['recall'] = metrics.recall_score(y_test, y_test_pred, zero_division=0, average='micro')
+    eval_dict['f1'] = metrics.f1_score(y_test, y_test_pred, zero_division=0, average='micro')
+    eval_dict['mcc'] = metrics.matthews_corrcoef(y_test, y_test_pred)
+    if ohe is not None:
+        eval_dict['roc-auc'] = metrics.roc_auc_score(ohe.transform(y_test), y_test_prob)
+    else:
+        eval_dict['roc-auc'] = metrics.roc_auc_score(y_test, y_test_prob)
+    return eval_dict
+    
 def evaluate_multiclass_mdl(fitted_model, X, y, class_l, ohe=None, plot_roc=False, plot_roc_class=True,\
-                           plot_conf_matrix=True, pct_matrix=True, plot_class_report=True, predopts={}):
+                            plot_conf_matrix=True, pct_matrix=True, plot_class_report=True, ret_eval_dict=False,\
+                            predopts={}):
     if not isinstance(X, (np.ndarray)) or not isinstance(y, (list, tuple, np.ndarray)):
         raise Exception("Data is not in the right format")
     n_classes = len(class_l)
@@ -222,7 +239,7 @@ def evaluate_multiclass_mdl(fitted_model, X, y, class_l, ohe=None, plot_roc=Fals
         plt.figure(figsize=(12, 11))
         if pct_matrix:
             sns.heatmap(conf_matrix/np.sum(conf_matrix), annot=True, xticklabels=class_l, yticklabels=class_l,\
-                        fmt='.0%', cmap='Blues', annot_kws={'size':12})
+                        fmt='.1%', cmap='Blues', annot_kws={'size':12})
         else:
             sns.heatmap(conf_matrix, annot=True, xticklabels=class_l, yticklabels=class_l,\
                         cmap='Blues', annot_kws={'size':12})
@@ -231,12 +248,29 @@ def evaluate_multiclass_mdl(fitted_model, X, y, class_l, ohe=None, plot_roc=Fals
     if plot_class_report:
         print(metrics.classification_report(y, y_pred, digits=3, zero_division=0))
     
-    return y_pred, y_prob
+    if ret_eval_dict:
+        return evaluate_multiclass_metrics_mdl(fitted_model, y_prob, y_pred, y, ohe)
+    else:
+        return y_pred, y_prob
+
+def evaluate_reg_metrics_mdl(fitted_model, y_train_pred, y_test_pred, y_train, y_test):      
+    eval_dict = {}
+    eval_dict['fitted'] = fitted_model
+    eval_dict['preds_train'] = y_train_pred
+    eval_dict['preds_test'] = y_test_pred
+    eval_dict['trues_train'] = y_train
+    eval_dict['trues_test'] = y_test
+    eval_dict['rmse_train'] = metrics.mean_squared_error(y_train, y_train_pred, squared=False)
+    eval_dict['rmse_test'] = metrics.mean_squared_error(y_test, y_test_pred, squared=False)
+    eval_dict['r2_train'] = metrics.r2_score(y_train, y_train_pred)
+    eval_dict['r2_test'] = metrics.r2_score(y_test, y_test_pred)
+    return eval_dict
 
 def evaluate_reg_mdl(fitted_model, X_train, X_test, y_train, y_test, scaler=None,\
-                     y_truncate=False, predopts={}):
+                     plot_regplot=True, y_truncate=False, show_summary=True,\
+                     ret_eval_dict=False, predopts={}):
     y_train_ = y_train.copy()
-    y_test_ = y_train.copy()
+    y_test_ = y_test.copy()
     if not isinstance(X_train, (np.ndarray, tuple, list)) or X_train.shape[1] != y_train.shape[1]: 
         y_train_pred = fitted_model.predict(X_train, **predopts)
     else:
@@ -253,23 +287,24 @@ def evaluate_reg_mdl(fitted_model, X_train, X_test, y_train, y_test, scaler=None
         y_test_ = scaler.inverse_transform(y_test_)
         y_train_pred = scaler.inverse_transform(y_train_pred)
         y_test_pred = scaler.inverse_transform(y_test_pred)
-    RMSE_reg_train = math.sqrt(\
-                        metrics.mean_squared_error(y_train_,\
-                                                   y_train_pred))
-    RMSE_reg_test = math.sqrt(\
-                        metrics.mean_squared_error(y_test_,
-                                                   y_test_pred))
-    R2_reg_test = metrics.r2_score(y_test_,\
-                                   y_test_pred)
-    plt.figure(figsize = (12,12))
-    plt.ylabel('Predicted', fontsize = 14)
-    plt.scatter(y_test_, y_test_pred)
-    sns.regplot(x=y_test_, y=y_test_pred, color="g")
-    plt.xlabel('Observed', fontsize = 14)
-    plt.show()     
-    print('RMSE_train: %.4f\tRMSE_test: %.4f\tr2: %.4f' %\
-                        (RMSE_reg_train, RMSE_reg_test, R2_reg_test))
-    if y_truncate:
+
+    if plot_regplot:
+        plt.figure(figsize = (12,12))
+        plt.ylabel('Predicted', fontsize = 14)
+        plt.scatter(y_test_, y_test_pred)
+        sns.regplot(x=y_test_, y=y_test_pred, color="g")
+        plt.xlabel('Observed', fontsize = 14)
+        plt.show()     
+    
+    if show_summary:
+        print('RMSE_train: %.4f\tRMSE_test: %.4f\tr2: %.4f' %\
+                (metrics.mean_squared_error(y_train_, y_train_pred, squared=False),\
+                 metrics.mean_squared_error(y_test_, y_test_pred, squared=False),\
+                 metrics.r2_score(y_test_, y_test_pred)))
+        
+    if ret_eval_dict:
+        return evaluate_reg_metrics_mdl(fitted_model, y_train_pred, y_test_pred, y_train_, y_test_)
+    elif y_truncate:
         return y_train_pred, y_test_pred, y_train_, y_test_
     else:
         return y_train_pred, y_test_pred
@@ -772,4 +807,118 @@ def plot_prob_contour_map(x, y, z, x_intervals=7, y_intervals=7, use_quartiles=F
     ax_bottom[1].set_ylabel('')
     sns.set_style(None)
 
+    plt.show()
+    
+def compare_image_predictions(X_mod, X_orig, y_mod, y_orig, y_mod_prob=None, y_orig_prob=None,\
+                              num_samples=3, title_mod_prefix="Modified: ", title_orig_prefix="Original: ",\
+                              calc_difference=True, title_difference_prefix="Average difference: ",\
+                              max_width=14, use_misclass=True):
+    if calc_difference:
+        X_difference = np.mean(np.abs((X_mod - X_orig)))
+        diff_title = (title_difference_prefix + '{:4.3f}').format(X_difference)
+    if num_samples > 0:
+        if use_misclass:
+            misclass_idx = np.unique(np.where(y_orig != y_mod)[0])
+        else:
+            misclass_idx = np.unique(np.where(y_orig == y_mod)[0])
+        if misclass_idx.shape[0] > 0:
+            if misclass_idx.shape[0] < num_samples:
+                num_samples = misclass_idx.shape[0]
+                samples_idx = misclass_idx
+            else:
+                np.random.shuffle(misclass_idx)
+                samples_idx = misclass_idx[0:num_samples]
+            if num_samples > 2:
+                width = max_width
+                lg = math.log(num_samples)
+            elif num_samples == 2:
+                width = round(max_width*0.6)
+                lg = 0.6
+            else:
+                width = round(max_width*0.3)
+                lg = 0.3
+            img_ratio = X_mod.shape[1]/X_mod.shape[2]
+            height = round((((width - ((num_samples - 1)*(0.75 / lg)))/num_samples)*img_ratio))*2
+            plt.subplots(figsize=(width,height))
+            for i, s in enumerate(samples_idx, start=1):
+                plt.subplot(2, num_samples, i)
+                plt.imshow(X_mod[s])
+                plt.grid(b=None)
+                if num_samples > 3:
+                    plt.axis('off')
+                if y_mod_prob is None:
+                    plt.title("%s%s" % (title_mod_prefix, y_mod[s]))
+                else:
+                    plt.title("%s%s (%.1f%%)" % (title_mod_prefix, y_mod[s], y_mod_prob[s]*100))
+            for i, s in enumerate(samples_idx, start=1):
+                plt.subplot(2, num_samples, i+num_samples)
+                plt.imshow(X_orig[s])
+                plt.grid(b=None)
+                if num_samples > 3:
+                    plt.axis('off')
+                if y_orig_prob is None:
+                    plt.title("%s%s" % (title_orig_prefix, y_orig[s]))
+                else:
+                    plt.title("%s%s (%.1f%%)" % (title_orig_prefix, y_orig[s], y_orig_prob[s]*100))
+            if calc_difference:
+                plt.subplots_adjust(bottom=0, top=0.88)
+                fs = 21 - num_samples
+                plt.suptitle(diff_title, fontsize=fs)
+            plt.show()
+        else:
+            if calc_difference:
+                print(diff_title)
+            print("No Different Classifications")
+
+def profits_by_thresh(y_profits, y_pred, threshs, var_costs=1, min_profit=None, fixed_costs=0):
+    profits_dict = {}
+    for thresh in threshs:
+        profits_dict[thresh] = {}
+        profits_dict[thresh]["revenue"] = sum(y_profits[y_pred > thresh])
+        profits_dict[thresh]["costs"] = (sum(y_pred > thresh)*var_costs)+var_costs
+        profits_dict[thresh]["profit"] = profits_dict[thresh]["revenue"] -\
+                                         profits_dict[thresh]["costs"]
+        if profits_dict[thresh]["costs"] > 0:
+            profits_dict[thresh]["roi"] = profits_dict[thresh]["profit"]/\
+                                          profits_dict[thresh]["costs"]
+        else:
+            profits_dict[thresh]["roi"] = 0
+            
+    profits_df = pd.DataFrame.from_dict(profits_dict, 'index')
+    if min_profit is not None:
+        profits_df = profits_df[profits_df.profit >= min_profit]
+    return profits_df
+            
+def compare_df_plots(df1, df2, title1=None, title2=None, y_label=None, x_label=None,\
+                     y_formatter=None, x_formatter=None, plot_args={}):
+    if y_formatter is None:
+        y_formatter = plt.FuncFormatter(lambda x, loc: "${:,}K".format(x/1000))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12,5), sharey=True)
+    df1.plot(ax=ax1, fontsize=13, **plot_args)
+    if title1 is not None:
+        ax1.set_title(title1, fontsize=20)
+    if y_label is not None:
+        ax1.set_ylabel(y_label, fontsize=14)
+    if x_label is not None:
+        ax1.set_xlabel(x_label, fontsize=14)
+    if 'secondary_y' in plot_args:
+        ax1.get_legend().set_bbox_to_anchor((0.7, 0.99))
+    if y_formatter is not None:
+        ax1.yaxis.set_major_formatter(y_formatter)
+    if x_formatter is not None:
+        ax1.xaxis.set_major_formatter(x_formatter)
+    ax1.grid(b=True)
+    ax1.right_ax.grid(False)
+    df2.plot(ax=ax2, fontsize=13, **plot_args)
+    if title2 is not None:
+        ax2.set_title(title2, fontsize=20)
+    if x_label is not None:
+        ax2.set_xlabel(x_label, fontsize=14)
+    if 'secondary_y' in plot_args:
+        ax2.get_legend().set_bbox_to_anchor((0.7, 0.99))
+    if x_formatter is not None:
+        ax2.xaxis.set_major_formatter(x_formatter)
+    ax2.grid(b=True)
+    ax2.right_ax.grid(False)
+    fig.tight_layout()
     plt.show()
