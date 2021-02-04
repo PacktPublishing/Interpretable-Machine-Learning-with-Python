@@ -117,6 +117,14 @@
             }
         },
         {
+            "name":"recidivism-risk-balanced",
+            "source":"URL",
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/recidivism-risk_balanced.csv",
+            "filenames":"recidivism-risk_balanced.csv",
+            "filetypes":"csv",
+            "target":"compas_score"
+        },
+        {
             "name":"recidivism-risk",
             "source":"URL",
             "location":"https://storage.googleapis.com/what-if-tool-resources/computefest2019/cox-violent-parsed_filt.csv",
@@ -141,12 +149,21 @@
         },
         {
             "name":"fruits-360", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/fruits-360_abbrev.zip",
+            "filenames":["train/*/*.jpg", "test/*/*.jpg", "val/*/*.jpg", "val_orig/*/*.jpg"],
+            "filesplits":["train", "test", "val", "val_orig"],
+            "filetypes":["img", "img", "img", "img"],
+            "target":"__dirname__"
+        },
+        {
+            "name":"fruits-360_kaggle", 
             "source":"Kaggle", 
             "location":"moltean/fruits",
-            "filenames":["Training/*/*.jpg", "Test/*/*.jpg"],
+            "filenames":["fruits-360/Training/*/*.jpg", "fruits-360/Test/*/*.jpg"],
             "filesplits":["train", "test"],
             "filetypes":["img","img"],
-            "target":"fruit=__dirname__"
+            "target":"__dirname__"
         },
         {
             "name":"traffic-volume",
@@ -154,23 +171,22 @@
             "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/00492/Metro_Interstate_Traffic_Volume.csv.gz",
             "filenames":"Metro_Interstate_Traffic_Volume.csv",
             "filetypes":"csv",
-            "target":"traffic_volume"
+            "target":"traffic_volume", 
+            "csvopts":{
+                "usecols":["date_time", "temp", "rain_1h", "snow_1h", "clouds_all", "weather_main", "holiday", "traffic_volume"],
+                "parse_dates":["date_time"]
+            },
+            "prepcmds":["df = df.drop_duplicates()", "df = df.groupby('date_time').agg({'temp':'mean', 'rain_1h':'mean', 'snow_1h':'mean', 'clouds_all':'mean', 'traffic_volume':'mean', 'weather_main':'first', 'holiday':'first'})", "df = df.reindex(pd.date_range(start=df.index.min(), end=df.index.max(), freq='1H'))", "df.interpolate(method='index', inplace=True)", "df.fillna('None', inplace=True)", "df.index.name = 'date_time'", "df.reset_index(inplace=True)", "df['date'] = df.date_time.dt.date", "df = df[['date_time', 'temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'date', 'traffic_volume']].merge(df[['date','holiday']].groupby('date').agg({'holiday': lambda x: max(x, key=len)}).reset_index(), how='left', on='date')", "df['is_holiday'] = np.where(df.holiday=='None', 0, 1)", "df.loc[df.date.astype(str).isin(['2015-01-01', '2013-01-21', '2015-01-19', '2016-01-18', '2015-02-16', '2015-05-25', '2014-07-04', '2014-08-21', '2014-09-01', '2014-10-13', '2014-11-11', '2014-11-27', '2014-12-25']), 'is_holiday'] = 1", "df.loc[:,'temp'] = (df.temp - 273.15)", "df['month'] = df.date_time.dt.month", "df['dow'] = df.date_time.dt.dayofweek", "df['hr'] = df.date_time.dt.hour", "df.loc[df.rain_1h > 50, 'rain_1h'] = 1.055", "df = df[['date_time', 'dow', 'hr', 'temp', 'rain_1h', 'clouds_all', 'weather_main', 'is_holiday', 'traffic_volume']].rename(columns={'weather_main':'weather', 'clouds_all':'cloud_coverage'})", "df.loc[df.weather=='None', 'weather'] = 'Unknown'", "df = make_dummies_with_limits(df, 'weather', min_recs=0.01)", "df = df[df.date_time >= '2015-10-28 00:00:00']", "df.set_index('date_time', inplace=True)"]
         },
         {
-            "name":"news-fake",
-            "source":"Kaggle",
-            "location":"clmentbisaillon/fake-and-real-news-dataset",
-            "filenames":["True.csv","Fake.csv"],
+            "name":"nonprofit-mailer",
+            "source":"URL",
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/mailing-list.zip",
+            "filenames":["train.csv","test.csv"],
+            "filesplits":["train", "test"],
             "filetypes":["csv","csv"],
-            "target":"isfake=__filename__"
-        },
-        {
-            "name":"melbourne-housing_unusable",
-            "source":"Kaggle",
-            "location":"anthonypino/melbourne-housing-market",
-            "filenames":"Melbourne_housing_FULL.csv",
-            "filetypes":"csv",
-            "target":"price"
+            "prepcmds":["df = df.dropna(axis=1)", "df.drop(['TARGET_B'], axis=1, inplace=True)", "df.set_index('CONTROLN', inplace=True)"],
+            "target":"TARGET_D"
         },
         {
             "name":"cc-default",
@@ -181,7 +197,42 @@
             "target":"default.payment.next.month",
             "xlsopts":{
                 "skiprows":1
-            }
+            },
+            "prepcmds":["df.set_index('ID', inplace=True)"]
+        },
+        {
+            "name":"news-fake",
+            "source":"Kaggle",
+            "location":"clmentbisaillon/fake-and-real-news-dataset",
+            "filenames":["True.csv","Fake.csv"],
+            "filetypes":["csv","csv"],
+            "target":"isfake=__filename__"
+        },
+        {
+            "name":"maskedface-net_thumbs_sampled", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/maskedface-net_thumbs_sampled.zip",
+            "filenames":["train/*/*.jpg", "test/*/*.*g"],
+            "filesplits":["train", "test"],
+            "filetypes":["img", "img"],
+            "target":"__dirname__"
+        },
+        {
+            "name":"maskedface-net_thumbs_complete", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/maskedface-net_thumbs_complete.zip",
+            "filenames":["train/*/*.jpg", "test/*/*.jpg"],
+            "filesplits":["train", "test"],
+            "filetypes":["img", "img"],
+            "target":"__dirname__"
+        },
+        {
+            "name":"melbourne-housing_unusable",
+            "source":"Kaggle",
+            "location":"anthonypino/melbourne-housing-market",
+            "filenames":"Melbourne_housing_FULL.csv",
+            "filetypes":"csv",
+            "target":"price"
         },
         {
             "name":"chinese-trafficsigns",
