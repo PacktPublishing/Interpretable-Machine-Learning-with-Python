@@ -1,0 +1,252 @@
+{
+    "datasets":[
+        {
+            "name":"cardiovascular-disease", 
+            "source":"URL", 
+            "location":"https://raw.githubusercontent.com/caravanuden/cardio/master/cardio_train.csv", 
+            "filenames":"cardio_train.csv",
+            "filetypes":"csv",
+            "target":"cardio",
+            "removecols":["id"],
+            "csvopts":{
+                "sep":";"
+            }
+        },
+        {
+            "name":"cardiovascular-disease_kaggle", 
+            "source":"Kaggle", 
+            "location":"sulianova/cardiovascular-disease-dataset", 
+            "filenames":"cardio_train.csv",
+            "filetypes":"csv",
+            "target":"cardio",
+            "removecols":["id"],
+            "csvopts":{
+                "sep":";"
+            }
+        },
+        {
+            "name":"airline-delays-and-cancellations-2018_kaggle", 
+            "source":"Kaggle", 
+            "location":"yuanyuwendymu/airline-delay-and-cancellation-data-2009-2018", 
+            "filenames":"2018.csv",
+            "filetypes":"csv",
+            "target":"CARRIER_DELAY",
+            "removecols":["Unnamed: 27"],
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"aa-domestic-delays-2018", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/aa-domestic-delays-2018.csv.zip", 
+            "filenames":"aa-domestic-delays-2018.csv",
+            "filetypes":"csv",
+            "target":"CARRIER_DELAY",
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"personality-birthorder",
+            "source":"URL",
+            "location":"https://openpsychometrics.org/_rawdata/FBPS-ValidationData.zip",
+            "filenames":"FBPS-ValidationData/FBPS-ValidationData.csv",
+            "filetypes":"csv",
+            "target":["birthpos","birthn"],
+            "removecols":["dateload", "submittime"],
+            "csvopts":{
+                "sep":"\t"
+            },
+            "prepcmds":["df = df[(df.country.isin(['US', 'GB', 'CA', 'AU', 'NZ', 'IE']))]", "df = df[df.age <= 90]", "df = df[(df.birthn > 1) & (df.birthn < 11) & (df.birthpos <= df.birthn) & (df.birthpos > 0)]", "df = pd.get_dummies(df, columns=['gender', 'country', 'source']).rename({'gender_0':'gender_undefined', 'gender_1':'gender_male', 'gender_2':'gender_female', 'gender_3':'gender_other', 'source_0':'source_undefined', 'source_1':'source_google', 'source_2':'source_direct', 'source_3':'source_other'}, axis=1)", "df.loc[:, 'birthorder'] = 0", "df.loc[(df.birthpos == 1), 'birthorder'] = 1", "df.loc[(df.birthpos > 1) & (df.birthpos < df.birthn), 'birthorder'] = 2", "df.loc[(df.birthpos > 1) & (df.birthpos == df.birthn), 'birthorder'] = 3", "df.drop(['birthpos'], axis=1, inplace=True)"]
+        },
+        {
+            "name":"wine-quality",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv",
+            "filenames":"winequality-red.csv",
+            "filetypes":"csv",
+            "target":"quality"
+        },
+        {
+            "name":"chocolate-bar-ratings_kaggle", 
+            "source":"Kaggle", 
+            "location":"soroushghaderi/chocolate-bar-2020", 
+            "filenames":"chocolate.csv",
+            "filetypes":"csv",
+            "target":"rating",
+            "removecols":["ref", "Unnamed: 0", "specific_bean_origin_or_bar_name"],
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"chocolate-bar-ratings", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/chocolate-ratings.zip", 
+            "filenames":"chocolate.csv",
+            "filetypes":"csv",
+            "target":"rating",
+            "removecols":["ref", "Unnamed: 0", "specific_bean_origin_or_bar_name"],
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"arabica-coffee-quality", 
+            "source":"Kaggle", 
+            "location":"volpatto/coffee-quality-database-from-cqi", 
+            "filenames":"arabica_data_cleaned.csv",
+            "filetypes":"csv",
+            "target":"rating",
+            "removecols":["Species", "Owner", "Farm.Name", "Lot.Number", "Mill", "ICO.Number", "Company", "Altitude", "Region", "Producer", "In.Country.Partner", "Owner.1", "Expiration", "Certification.Body", "Certification.Address", "Certification.Contact"],
+            "csvopts":{
+                "sep":","
+            }
+        },
+        {
+            "name":"vehicle-fueleconomy", 
+            "source":"URL", 
+            "location":"https://www.fueleconomy.gov/feg/epadata/vehicles.csv.zip",
+            "filenames":"vehicles.csv",
+            "filetypes":"csv",
+            "target":["comb08"],
+            "csvopts":{
+                "usecols":["make", "model", "year", "fuelType", "cylinders", "displ", "eng_dscr", "phevBlended", "atvType", "co2TailpipeGpm", "co2", "ghgScore", "drive", "trany", "trans_dscr", "VClass", "pv4", "lv4", "lv2", "pv2", "hlv", "hpv", "startStop", "tCharger", "comb08"],
+                "dtype":{"make":"object", "model":"object", "year":"int16", "fuelType":"object", "cylinders":"float32", "displ":"float32", "trany":"object", "drive":"object", "eng_dscr":"object", "trans_dscr":"object", "phevBlended":"bool", "co2":"int16", "ghgScore":"int16", "co2TailpipeGpm":"float32", "VClass":"object", "pv4":"int16", "lv4":"int16", "lv2":"int16", "pv2":"int16", "hlv":"int16", "hpv":"int16", "fuelCost08":"int16", "startStop":"object", "tCharger":"object", "atvType":"object", "comb08":"int16"} 
+            },
+            "prepcmds":["df.cylinders.fillna(0, inplace=True)", "df.displ.fillna(0, inplace=True)", "df.atvType.fillna('Unknown', inplace=True)", "df.drive.fillna('Unknown', inplace=True)", "df.trans_dscr.fillna('Unknown', inplace=True)", "df.startStop.fillna('Unknown', inplace=True)", "df.tCharger.fillna(0, inplace=True)", "df.tCharger.replace('T', 1, inplace=True)", "df = make_dummies_with_limits(df, 'fuelType')", "df['drive'] = df['drive'].str.replace(' Drive', '', regex=False)", "df = make_dummies_with_limits(df, 'drive')", "df['VClass'] = df['VClass'].str.replace(' -', '', regex=False)", "df = make_dummies_with_limits(df, 'VClass')", "df = make_dummies_with_limits(df, 'startStop')", "df = make_dummies_with_limits(df, 'atvType')", "df['trans_spd'] = df.trany.str.extract('(\\d+)').fillna(0).astype(np.int8)", "df = make_dummies_from_dict(df, 'trany', ['Automatic', 'Manual'])", "df = make_dummies_from_dict(df, 'eng_dscr', ['FFS','SIDI','CA model','MPFI','FFV','TRBO','350 V8','PFI','GUZZLER','SOHC','NO-CAT'])", "df = make_dummies_from_dict(df, 'trans_dscr',['Unknown','CLKUP','SIL','2MODE','Creeper','EMS','3MODE','2LKUP'])"]
+        },
+        {
+            "name":"recidivism-risk-balanced",
+            "source":"URL",
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/recidivism-risk_balanced.csv",
+            "filenames":"recidivism-risk_balanced.csv",
+            "filetypes":"csv",
+            "target":"compas_score"
+        },
+        {
+            "name":"recidivism-risk",
+            "source":"URL",
+            "location":"https://storage.googleapis.com/what-if-tool-resources/computefest2019/cox-violent-parsed_filt.csv",
+            "filenames":"cox-violent-parsed_filt.csv",
+            "filetypes":"csv",
+            "target":"compas_score", 
+            "csvopts":{
+                "usecols":["sex", "age", "race", "juv_fel_count", "juv_misd_count", "juv_other_count", "priors_count", "c_jail_in", "c_jail_out", "c_charge_degree", "is_recid", "days_b_screening_arrest", "decile_score", "score_text"],
+                "dtype":{"sex":"object", "age":"int8", "race":"object", "juv_fel_count":"int8", "juv_misd_count":"int8", "priors_count":"int8", "c_charge_degree":"object", "is_recid":"int8", "decile_score":"int8", "score_text":"object"},
+                "parse_dates":["c_jail_in", "c_jail_out"]
+            },
+            "prepcmds":["df = df[(df.is_recid != -1) & (df.decile_score != -1) & (df.days_b_screening_arrest <= 30) & (df.days_b_screening_arrest >= -30) & (df.c_charge_degree != 'O') & (df.score_text != 'N/A')]", "df['length_of_stay'] = (df['c_jail_out'] - df['c_jail_in']).astype('timedelta64[h]')/24", "df = pd.get_dummies(df, columns=['sex', 'race'])", "df = make_dummies_with_limits(df, 'c_charge_degree')", "df['compas_score'] = np.where(df['score_text'] == 'Low', 0, 1)", "df.drop(['c_jail_in', 'c_jail_out', 'score_text', 'decile_score', 'days_b_screening_arrest', 'length_of_stay'], axis=1, inplace=True)"]
+        },
+        {
+            "name":"ushospital-diabetes",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/00296/dataset_diabetes.zip",
+            "filenames":"dataset_diabetes/diabetic_data.csv",
+            "filetypes":"csv",
+            "target":"readmitted",
+            "removecols":["weight", "medical_specialty", "payer_code", "encounter_id", "patient_nbr", "admission_type_id", "discharge_disposition_id", "admission_source_id"]
+        },
+        {
+            "name":"fruits-360", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/fruits-360_abbrev.zip",
+            "filenames":["train/*/*.jpg", "test/*/*.jpg", "val/*/*.jpg", "val_orig/*/*.jpg"],
+            "filesplits":["train", "test", "val", "val_orig"],
+            "filetypes":["img", "img", "img", "img"],
+            "target":"__dirname__"
+        },
+        {
+            "name":"fruits-360_kaggle", 
+            "source":"Kaggle", 
+            "location":"moltean/fruits",
+            "filenames":["fruits-360/Training/*/*.jpg", "fruits-360/Test/*/*.jpg"],
+            "filesplits":["train", "test"],
+            "filetypes":["img","img"],
+            "target":"__dirname__"
+        },
+        {
+            "name":"traffic-volume",
+            "source":"URL",
+            "location":"https://archive.ics.uci.edu/ml/machine-learning-databases/00492/Metro_Interstate_Traffic_Volume.csv.gz",
+            "filenames":"Metro_Interstate_Traffic_Volume.csv",
+            "filetypes":"csv",
+            "target":"traffic_volume", 
+            "csvopts":{
+                "usecols":["date_time", "temp", "rain_1h", "snow_1h", "clouds_all", "weather_main", "holiday", "traffic_volume"],
+                "parse_dates":["date_time"]
+            },
+            "prepcmds":["df = df.drop_duplicates()", "df = df.groupby('date_time').agg({'temp':'mean', 'rain_1h':'mean', 'snow_1h':'mean', 'clouds_all':'mean', 'traffic_volume':'mean', 'weather_main':'first', 'holiday':'first'})", "df = df.reindex(pd.date_range(start=df.index.min(), end=df.index.max(), freq='1H'))", "df.interpolate(method='index', inplace=True)", "df.fillna('None', inplace=True)", "df.index.name = 'date_time'", "df.reset_index(inplace=True)", "df['date'] = df.date_time.dt.date", "df = df[['date_time', 'temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'date', 'traffic_volume']].merge(df[['date','holiday']].groupby('date').agg({'holiday': lambda x: max(x, key=len)}).reset_index(), how='left', on='date')", "df['is_holiday'] = np.where(df.holiday=='None', 0, 1)", "df.loc[df.date.astype(str).isin(['2015-01-01', '2013-01-21', '2015-01-19', '2016-01-18', '2015-02-16', '2015-05-25', '2014-07-04', '2014-08-21', '2014-09-01', '2014-10-13', '2014-11-11', '2014-11-27', '2014-12-25']), 'is_holiday'] = 1", "df.loc[:,'temp'] = (df.temp - 273.15)", "df['month'] = df.date_time.dt.month", "df['dow'] = df.date_time.dt.dayofweek", "df['hr'] = df.date_time.dt.hour", "df.loc[df.rain_1h > 50, 'rain_1h'] = 1.055", "df = df[['date_time', 'dow', 'hr', 'temp', 'rain_1h', 'clouds_all', 'weather_main', 'is_holiday', 'traffic_volume']].rename(columns={'weather_main':'weather', 'clouds_all':'cloud_coverage'})", "df.loc[df.weather=='None', 'weather'] = 'Unknown'", "df = make_dummies_with_limits(df, 'weather', min_recs=0.01)", "df = df[df.date_time >= '2015-10-28 00:00:00']", "df.set_index('date_time', inplace=True)"]
+        },
+        {
+            "name":"nonprofit-mailer",
+            "source":"URL",
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/mailing-list.zip",
+            "filenames":["train.csv","test.csv"],
+            "filesplits":["train", "test"],
+            "filetypes":["csv","csv"],
+            "prepcmds":["df = df.dropna(axis=1)", "df.drop(['TARGET_B'], axis=1, inplace=True)", "df.set_index('CONTROLN', inplace=True)"],
+            "target":"TARGET_D"
+        },
+        {
+            "name":"cc-default",
+            "source":"URL",
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/cc_defaults_taiwan.csv.zip",
+            "filenames":"cc_defaults_new_taiwan.csv",
+            "filetypes":"csv",
+            "target":"IS_DEFAULT",
+            "csvopts":{
+                "dtype":{"CC_LIMIT_CAT":"int8", "EDUCATION":"int8", "MARITAL_STATUS":"int8", "GENDER":"int8", "AGE_GROUP":"int8", "pay_status_1":"int8", "pay_status_2":"int8", "pay_status_3":"int8", "pay_status_4":"int8", "pay_status_5":"int8", "pay_status_6":"int8", "IS_DEFAULT":"int8", "_AGE":"int16", "_spend":"int32", "_tpm":"int16", "_ppm":"int16", "_RETAIL":"int8", "_URBAN":"int8", "_RURAL":"int8", "_PREMIUM":"int8", "_TREATMENT":"int8", "_CC_LIMIT":"int32"}
+            },
+            "prepcmds":["df.set_index('ID', inplace=True)"]
+        },
+        {
+            "name":"news-fake",
+            "source":"Kaggle",
+            "location":"clmentbisaillon/fake-and-real-news-dataset",
+            "filenames":["True.csv","Fake.csv"],
+            "filetypes":["csv","csv"],
+            "target":"isfake=__filename__"
+        },
+        {
+            "name":"maskedface-net_thumbs_sampled", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/maskedface-net_thumbs_sampled.zip",
+            "filenames":["train/*/*.jpg", "test/*/*.*g"],
+            "filesplits":["train", "test"],
+            "filetypes":["img", "img"],
+            "target":"__dirname__"
+        },
+        {
+            "name":"maskedface-net_thumbs_complete", 
+            "source":"URL", 
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/maskedface-net_thumbs_complete.zip",
+            "filenames":["train/*/*.jpg", "test/*/*.jpg"],
+            "filesplits":["train", "test"],
+            "filetypes":["img", "img"],
+            "target":"__dirname__"
+        },
+        {
+            "name":"melbourne-housing_unusable",
+            "source":"Kaggle",
+            "location":"anthonypino/melbourne-housing-market",
+            "filenames":"Melbourne_housing_FULL.csv",
+            "filetypes":"csv",
+            "target":"price"
+        },
+        {
+            "name":"chinese-trafficsigns",
+            "source":"URL",
+            "location":["http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Train%20Annotation.zip", "http://www.nlpr.ia.ac.cn/pal/trafficdata/tsrd-train.zip","http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Test%20Annotation.zip", "http://www.nlpr.ia.ac.cn/pal/trafficdata/TSRD-Test.zip"],
+            "filenames":["TsignRecgTrain4170Annotation.txt", "./tsrd-train/*.png", "TsignRecgTest1994Annotation.txt", "./TSRD-Test/*.png"],
+            "filetypes":["csv", "png", "csv", "png"],
+            "filesplits":["train","train", "test", "test"],
+            "target":"class",
+            "csvopts":{
+                "colnames":["__filename__","X1","X2","X3","X4","X5","X6","class","empty"],
+                "removecols":["X1","X2","X3","X4","X5","X6","empty"]
+            }
+        }
+    ]
+}
