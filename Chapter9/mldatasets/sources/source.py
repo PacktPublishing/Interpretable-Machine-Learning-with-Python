@@ -77,8 +77,13 @@ class Source:
                         del nkwargs['removecols']
                     nkwargs['files'][i]['content'] = self.parse_csv(file['__filepath__'], nkwargs['csvopts'])
                 elif file['filetype'] == 'xls':  
-                    #TODO: create xls handling function
-                    pass
+                    if 'xlsopts' not in nkwargs:
+                        nkwargs['xlsopts'] = {}
+                    if 'removecols' in nkwargs:
+                        removecols = nkwargs['removecols'].copy()
+                        nkwargs['xlsopts']['usecols'] = lambda x: x not in removecols
+                        del nkwargs['removecols']
+                    nkwargs['files'][i]['content'] = self.parse_xls(file['__filepath__'], nkwargs['xlsopts'])
                 elif file['filetype'] == 'img': 
                     if 'imgopts' not in nkwargs:
                         nkwargs['imgopts'] = {}
@@ -93,6 +98,14 @@ class Source:
             return pd.read_csv(fpath, **csvopts)[csvopts['usecols']]
         else:
             return pd.read_csv(fpath, **csvopts)
+        
+    def parse_xls(self, fpath, xlsopts):
+        #TODO: add some extra exceptions ~ convert to numpy array perhaps
+        print('parsing '+fpath)
+        if 'usecols' in xlsopts and isinstance(xlsopts['usecols'], (np.ndarray, list)):
+            return pd.read_excel(fpath, **xlsopts)[xlsopts['usecols']]
+        else:
+            return pd.read_excel(fpath, **xlsopts)
     
     def parse_img(self, fpath, imgopts):
         if 'mode' in imgopts and isinstance(imgopts['mode'], (int, np.int8, np.int16, np.int32, np.int64)):
@@ -117,7 +130,7 @@ class Source:
                 for i in range(len(nkwargs['files'])):
                     if isinstance(nkwargs['files'][i]['content'], pd.DataFrame):
                         df = nkwargs['files'][i]['content'].copy()
-                        cmds = nkwargs['prepcmds']
+                        cmds = nkwargs['prepcmds'].copy()
                         cmds.insert(0, "df = dfo.copy(deep=True)")
                         cmds.insert(0, "def prep(dfo):")
                         cmds.append("return df")
@@ -134,8 +147,16 @@ class Source:
             all_contents = []
             all_labels = []
             for split in splits:
-                contents, labels = list(zip(*[(i['content'], i[nkwargs['target']])\
-                                              for i in nkwargs['files'] if i["filesplit"] == split]))
+                if 'target' in nkwargs:
+                    if nkwargs['files'][0]['filetype'] == 'csv':
+                        contents, labels = list(zip(*[(i['content'].drop(nkwargs['target'], axis=1), i['content'][nkwargs['target']])\
+                                                      for i in nkwargs['files'] if i["filesplit"] == split]))
+                    else:
+                        contents, labels = list(zip(*[(i['content'], i[nkwargs['target']])\
+                                                      for i in nkwargs['files'] if i["filesplit"] == split]))
+                else:
+                    contents = [i['content'] for i in nkwargs['files'] if i["filesplit"] == split]
+                    labels = []
                 if len(labels) and isinstance(labels, (tuple, list)):
                     labels = np.array(list(labels)).reshape(-1, 1)
                 if len(contents) and isinstance(contents[0], (np.ndarray)):
@@ -150,8 +171,14 @@ class Source:
                         contents = eval("prep(arr)")
                         #contents = np.copy(arr)
                         del arr
-                all_contents.append(contents)
-                all_labels.append(labels)
+                if isinstance(contents, (list, tuple)) and len(contents) == 1:
+                    contents = contents[0]
+                if isinstance(labels, (list, tuple)) and len(labels) == 1:
+                    labels = labels[0]
+                if len(contents) > 0:
+                    all_contents.append(contents)
+                if len(labels) > 0:
+                    all_labels.append(labels)
             return tuple(all_contents + all_labels)
         
     def gather(self, files):
