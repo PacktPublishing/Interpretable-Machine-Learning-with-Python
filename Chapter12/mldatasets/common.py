@@ -671,8 +671,8 @@ def plot_prob_progression(x, y, x_intervals=7, use_quartiles=False,\
         raise Exception("x and y must have a single dimension")
     if (isinstance(x_intervals, (int)) and (x_intervals < 2)) or (isinstance(x_intervals, (list, np.ndarray)) and (len(x_intervals) < 2)):
         raise Exception("there must be at least two intervals to plot")
-    if not np.isin(y.dtype, [int, float, 'int8', 'int16', 'int32', 'float16', 'float32']):
-        raise Exception("y dimension must be a list, pandas series or numpy array of integers or floats")
+    if not np.isin(y.dtype, [int, float, 'int8', 'int16', 'int32', 'int64', 'float16', 'float32', 'float64']):
+        raise Exception("y dimension must be a list, pandas series or numpy array of integers or floats") #*
     if max(y) == min(y):
         raise Exception("y dimension must have at least two values")
     elif len(np.unique(y)) == 2 and ((max(y) != 1) or (min(y) != 0)):
@@ -738,8 +738,8 @@ def plot_prob_contour_map(x, y, z, x_intervals=7, y_intervals=7, use_quartiles=F
         raise Exception("x, y and z must have a single dimension")
     if (isinstance(x_intervals, (int)) and (x_intervals < 2)) or (isinstance(x_intervals, (list, np.ndarray)) and (len(x_intervals) < 2)) or (isinstance(y_intervals, (int)) and (y_intervals < 2)) or (isinstance(y_intervals, (list, np.ndarray)) and (len(y_intervals) < 2)):
         raise Exception("there must be at least two intervals to contour")
-    if not np.isin(z.dtype, [int, float, 'int8', 'int16', 'int32', 'float16', 'float32']):
-        raise Exception("z dimension must be a list, pandas series or numpy array of integers or floats")
+    if not np.isin(z.dtype, [int, float, 'int8', 'int16', 'int32', 'int64', 'float16', 'float32', 'float64']):
+        raise Exception("z dimension must be a list, pandas series or numpy array of integers or floats") #*
     if max(z) == min(z):
         raise Exception("z dimension must have at least two values")
     elif len(np.unique(z)) == 2 and ((max(z) != 1) or (min(z) != 0)):
