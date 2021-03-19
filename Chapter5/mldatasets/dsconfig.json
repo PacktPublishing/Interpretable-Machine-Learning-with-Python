@@ -123,7 +123,10 @@
             "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/recidivism-risk_balanced.csv",
             "filenames":"recidivism-risk_balanced.csv",
             "filetypes":"csv",
-            "target":"compas_score"
+            "target":"compas_score",
+            "csvopts":{
+                "dtype":{"sex":"object", "age":"int8", "race":"object", "juv_fel_count":"int8", "juv_misd_count":"int8", "juv_other_count":"int8", "priors_count":"int8", "c_charge_degree":"object", "days_b_screening_arrest":"float64", "length_of_stay":"float64", "compas_score":"int8", "is_recid":"int8"}
+            }
         },
         {
             "name":"recidivism-risk",
@@ -192,12 +195,12 @@
         {
             "name":"cc-default",
             "source":"URL",
-            "location":"http://archive.ics.uci.edu/ml/machine-learning-databases/00350/default of credit card clients.xls",
-            "filenames":"default of credit card clients.xls",
-            "filetypes":"xls",
-            "target":"default.payment.next.month",
-            "xlsopts":{
-                "skiprows":1
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/cc_defaults_taiwan.csv.zip",
+            "filenames":"cc_defaults_new_taiwan.csv",
+            "filetypes":"csv",
+            "target":"IS_DEFAULT",
+            "csvopts":{
+                "dtype":{"CC_LIMIT_CAT":"int8", "EDUCATION":"int8", "MARITAL_STATUS":"int8", "GENDER":"int8", "AGE_GROUP":"int8", "pay_status_1":"int8", "pay_status_2":"int8", "pay_status_3":"int8", "pay_status_4":"int8", "pay_status_5":"int8", "pay_status_6":"int8", "IS_DEFAULT":"int8", "_AGE":"int16", "_spend":"int32", "_tpm":"int16", "_ppm":"int16", "_RETAIL":"int8", "_URBAN":"int8", "_RURAL":"int8", "_PREMIUM":"int8", "_TREATMENT":"int8", "_CC_LIMIT":"int32"}
             },
             "prepcmds":["df.set_index('ID', inplace=True)"]
         },

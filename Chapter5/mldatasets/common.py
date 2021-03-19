@@ -17,6 +17,7 @@ import io
 import cv2
 from scipy.spatial import distance
 from tqdm.notebook import trange
+from aif360.metrics import ClassificationMetric
 
 def runcmd(cmd, verbose=False):
     sproc = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, 
@@ -78,7 +79,8 @@ def evaluate_class_metrics_mdl(fitted_model, y_train_pred, y_test_prob, y_test_p
     eval_dict = {}
     eval_dict['fitted'] = fitted_model
     eval_dict['preds_train'] = y_train_pred
-    eval_dict['probs_test'] = y_test_prob
+    if y_test_prob is not None:
+        eval_dict['probs_test'] = y_test_prob
     eval_dict['preds_test'] = y_test_pred
     eval_dict['accuracy_train'] = metrics.accuracy_score(y_train, y_train_pred)
     eval_dict['accuracy_test'] = metrics.accuracy_score(y_test, y_test_pred)
@@ -90,7 +92,8 @@ def evaluate_class_metrics_mdl(fitted_model, y_train_pred, y_test_prob, y_test_p
     eval_dict['f1_test'] = metrics.f1_score(y_test, y_test_pred, zero_division=0)
     eval_dict['mcc_train'] = metrics.matthews_corrcoef(y_train, y_train_pred)
     eval_dict['mcc_test'] = metrics.matthews_corrcoef(y_test, y_test_pred)
-    eval_dict['roc-auc_test'] = metrics.roc_auc_score(y_test, y_test_prob)
+    if y_test_prob is not None:
+        eval_dict['roc-auc_test'] = metrics.roc_auc_score(y_test, y_test_prob)
     return eval_dict
     
 def evaluate_class_mdl(fitted_model, X_train, X_test, y_train, y_test, plot_roc=True, plot_conf_matrix=False,\
@@ -149,17 +152,19 @@ def evaluate_class_mdl(fitted_model, X_train, X_test, y_train, y_test, plot_roc=
 def evaluate_multiclass_metrics_mdl(fitted_model, y_test_prob, y_test_pred, y_test, ohe=None):      
     eval_dict = {}
     eval_dict['fitted'] = fitted_model
-    eval_dict['probs'] = y_test_prob
+    if y_test_prob is not None:
+        eval_dict['probs'] = y_test_prob
     eval_dict['preds'] = y_test_pred
     eval_dict['accuracy'] = metrics.accuracy_score(y_test, y_test_pred)
     eval_dict['precision'] = metrics.precision_score(y_test, y_test_pred, zero_division=0, average='micro')
     eval_dict['recall'] = metrics.recall_score(y_test, y_test_pred, zero_division=0, average='micro')
     eval_dict['f1'] = metrics.f1_score(y_test, y_test_pred, zero_division=0, average='micro')
     eval_dict['mcc'] = metrics.matthews_corrcoef(y_test, y_test_pred)
-    if ohe is not None:
-        eval_dict['roc-auc'] = metrics.roc_auc_score(ohe.transform(y_test), y_test_prob)
-    else:
-        eval_dict['roc-auc'] = metrics.roc_auc_score(y_test, y_test_prob)
+    if y_test_prob is not None:
+        if ohe is not None:
+            eval_dict['roc-auc'] = metrics.roc_auc_score(ohe.transform(y_test), y_test_prob)
+        else:
+            eval_dict['roc-auc'] = metrics.roc_auc_score(y_test, y_test_prob)
     return eval_dict
     
 def evaluate_multiclass_mdl(fitted_model, X, y, class_l, ohe=None, plot_roc=False, plot_roc_class=True,\
@@ -627,7 +632,7 @@ def discretize(v, v_intervals, use_quartiles=False, use_continuous_bins=False):
         if isinstance(v_intervals, list): v_intervals = np.array(v_intervals)
         return v, v_intervals
     
-    if (np.isin(v.dtype, [int, float])) and (isinstance(v_intervals, (int))) and (len(np.unique(v)) >= v_intervals) and (max(v) > min(v)):
+    if (np.isin(v.dtype, [int, float, 'int8', 'int16', 'int32', 'float16', 'float32'])) and (isinstance(v_intervals, (int))) and (len(np.unique(v)) >= v_intervals) and (max(v) > min(v)):
         #v is discretizable, otherwise assumed to be already discretized
         if use_continuous_bins:
             if use_quartiles:
@@ -656,7 +661,8 @@ def discretize(v, v_intervals, use_quartiles=False, use_continuous_bins=False):
     return v, bins
 
 def plot_prob_progression(x, y, x_intervals=7, use_quartiles=False,\
-                          xlabel=None, ylabel=None, title=None, model=None, X_df=None, x_col=None):
+                          xlabel=None, ylabel=None, title=None, model=None, X_df=None, x_col=None,\
+                         mean_line=False, figsize=(12,6), x_margin=0.01):
     if isinstance(x, list): x = np.array(x)
     if isinstance(y, list): y = np.array(y)
     if (not isinstance(x, (str, pd.core.series.Series, np.ndarray))) or (not isinstance(y, (str, pd.core.series.Series, np.ndarray))):
@@ -665,8 +671,8 @@ def plot_prob_progression(x, y, x_intervals=7, use_quartiles=False,\
         raise Exception("x and y must have a single dimension")
     if (isinstance(x_intervals, (int)) and (x_intervals < 2)) or (isinstance(x_intervals, (list, np.ndarray)) and (len(x_intervals) < 2)):
         raise Exception("there must be at least two intervals to plot")
-    if not np.isin(y.dtype, [int, float]):
-        raise Exception("y dimension must be a list, pandas series or numpy array of integers or floats")
+    if not np.isin(y.dtype, [int, float, 'int8', 'int16', 'int32', 'int64', 'float16', 'float32', 'float64']):
+        raise Exception("y dimension must be a list, pandas series or numpy array of integers or floats") #*
     if max(y) == min(y):
         raise Exception("y dimension must have at least two values")
     elif len(np.unique(y)) == 2 and ((max(y) != 1) or (min(y) != 0)):
@@ -687,28 +693,42 @@ def plot_prob_progression(x, y, x_intervals=7, use_quartiles=False,\
         xy_df = pd.DataFrame({'x':x,'y':y})
     probs_df = xy_df.groupby(['x']).mean().reset_index()
     probs_df = pd.merge(plot_df, probs_df, how='left', on='x').fillna(0)
-
+    
     sns.set()
-    fig, (ax0, ax1) = plt.subplots(2, 1, figsize=(12,6),\
+    x_bin_cnt = len(x_bins)
+    l_width = 0.933
+    r_width = 0.05
+    w, h = figsize
+    wp = (w-l_width-r_width)/9.27356902357
+    xh_margin = ((wp-(x_margin*2))/(x_bin_cnt*2))+x_margin
+    fig, (ax0, ax1) = plt.subplots(2, 1, figsize=figsize,\
                                    gridspec_kw={'height_ratios': [3, 1]})
     if title is not None:
         fig.suptitle(title, fontsize=21)
         plt.subplots_adjust(top = 0.92, bottom=0.01, hspace=0.001, wspace=0.001)
     else:
         plt.subplots_adjust(top = 0.99, bottom=0.01, hspace=0.001, wspace=0.001)
+    ax0.minorticks_on()
     sns.lineplot(data=probs_df, x='x', y='y', ax=ax0)
     ax0.set_ylabel('Probability', fontsize=15)
     ax0.set_xlabel('')
-    ax0.set_xticks([], [])
-    sns.histplot(xy_df, x="x", stat='probability', bins=len(x_range), ax=ax1)
+    ax0.grid(b=True, axis='x', which='minor', color='w', linestyle=':')
+    #ax0.set_xticks([], [])
+    ax0.margins(x=xh_margin)
+    if mean_line:
+        ax0.axhline(y=xy_df.y.mean(), c='red', linestyle='dashed', label="mean")
+        ax0.legend()
+    sns.histplot(xy_df, x="x", stat='probability', bins=np.arange(x_bin_cnt+1)-0.5, ax=ax1)
     ax1.set_ylabel('Observations', fontsize=15)
     ax1.set_xlabel(xlabel, fontsize=15)
     ax1.xaxis.set_major_locator(plticker.MultipleLocator(base=1.0))
-    ax1.set_xticklabels([''] + list(x_bins))
+    ax1.set_xticklabels(['']+list(x_bins))
+    ax1.margins(x=x_margin)
     plt.show()
     
 def plot_prob_contour_map(x, y, z, x_intervals=7, y_intervals=7, use_quartiles=False, plot_type='contour',\
-                               xlabel=None, ylabel=None, title=None, model=None, X_df=None, x_col=None, y_col=None):
+                          xlabel=None, ylabel=None, title=None, model=None, X_df=None, x_col=None, y_col=None,\
+                          diff_to_mean=False, annotate=False):
     if isinstance(x, list): x = np.array(x)
     if isinstance(y, list): y = np.array(y)
     if isinstance(z, list): z = np.array(z)
@@ -718,8 +738,8 @@ def plot_prob_contour_map(x, y, z, x_intervals=7, y_intervals=7, use_quartiles=F
         raise Exception("x, y and z must have a single dimension")
     if (isinstance(x_intervals, (int)) and (x_intervals < 2)) or (isinstance(x_intervals, (list, np.ndarray)) and (len(x_intervals) < 2)) or (isinstance(y_intervals, (int)) and (y_intervals < 2)) or (isinstance(y_intervals, (list, np.ndarray)) and (len(y_intervals) < 2)):
         raise Exception("there must be at least two intervals to contour")
-    if not np.isin(z.dtype, [int, float]):
-        raise Exception("z dimension must be a list, pandas series or numpy array of integers or floats")
+    if not np.isin(z.dtype, [int, float, 'int8', 'int16', 'int32', 'int64', 'float16', 'float32', 'float64']):
+        raise Exception("z dimension must be a list, pandas series or numpy array of integers or floats") #*
     if max(z) == min(z):
         raise Exception("z dimension must have at least two values")
     elif len(np.unique(z)) == 2 and ((max(z) != 1) or (min(z) != 0)):
@@ -748,10 +768,18 @@ def plot_prob_contour_map(x, y, z, x_intervals=7, y_intervals=7, use_quartiles=F
         xyz_df = pd.DataFrame({'x':x_, 'y':y_, 'z':preds})
     else:
         xyz_df = pd.DataFrame({'x':x,'y':y,'z':z})
-    probs_df = xyz_df.groupby(['x','y']).mean().reset_index()
+    probs_df = xyz_df.groupby(['x','y']).mean().reset_index()        
     probs_df = pd.merge(plot_df, probs_df, how='left', on=['x','y']).fillna(0)
+    if diff_to_mean:
+        expected_value = xyz_df.z.mean()
+        probs_df['z'] = probs_df['z'] - expected_value
+        cmap = plt.cm.RdYlBu
+    else:
+        cmap = plt.cm.viridis
     grid_probs = np.reshape(probs_df.z.to_numpy(), x_grid.shape)
 
+    x_bin_cnt = len(x_bins)
+    y_bin_cnt = len(y_bins)
     fig, (ax_top, ax_bottom) = plt.subplots(2, 2, figsize=(12,9),\
                                    gridspec_kw={'height_ratios': [1, 7], 'width_ratios': [6, 1]})
     if title is not None:
@@ -762,7 +790,7 @@ def plot_prob_contour_map(x, y, z, x_intervals=7, y_intervals=7, use_quartiles=F
 
     sns.set_style(None)
     sns.set_style({'axes.facecolor':'white', 'grid.color': 'white'})
-    sns.histplot(xyz_df, x='x', stat='probability', bins=len(x_range), color=('dimgray',), ax=ax_top[0])
+    sns.histplot(xyz_df, x='x', stat='probability', bins=np.arange(x_bin_cnt+1)-0.5, color=('dimgray',), ax=ax_top[0])
     ax_top[0].set_xticks([])
     ax_top[0].set_yticks([])
     ax_top[0].set_xlabel('')
@@ -780,15 +808,23 @@ def plot_prob_contour_map(x, y, z, x_intervals=7, y_intervals=7, use_quartiles=F
             x_grid,
             y_grid,
             grid_probs,
-            cmap=plt.cm.viridis
+            cmap=cmap
         ) 
     else:
         mappable = ax_bottom[0].imshow(grid_probs, cmap=plt.cm.viridis,\
                                       interpolation='nearest', aspect='auto')
+        if annotate:
+            for i in range(y_bin_cnt):
+                for j in range(x_bin_cnt):
+                    text = ax_bottom[0].text(j, i, "{:.1%}".format(grid_probs[i, j]), fontsize=16,
+                                             ha="center", va="center", color="w")
+            ax_bottom[0].grid(False)
+            
     ax_bottom[0].xaxis.set_major_locator(plticker.MultipleLocator(base=1.0))
     ax_bottom[0].set_xticklabels([''] + list(x_bins))
     ax_bottom[0].yaxis.set_major_locator(plticker.MultipleLocator(base=1.0))
     ax_bottom[0].set_yticklabels([''] + list(y_bins))
+    #ax_bottom[0].margins(x=0.04, y=0.04)
 
     if xlabel is not None:
         ax_bottom[0].set_xlabel(xlabel, fontsize=15)
@@ -800,7 +836,7 @@ def plot_prob_contour_map(x, y, z, x_intervals=7, y_intervals=7, use_quartiles=F
     cbar.ax.set_ylabel('Probability', fontsize=13)
     cbar.ax.tick_params(labelsize=11)
 
-    sns.histplot(xyz_df, y="y", stat='probability', bins=len(y_range), color=('dimgray',), ax=ax_bottom[1])
+    sns.histplot(xyz_df, y="y", stat='probability', bins=np.arange(y_bin_cnt+1)-0.5, color=('dimgray',), ax=ax_bottom[1])
     ax_bottom[1].set_xticks([])
     ax_bottom[1].set_yticks([])
     ax_bottom[1].set_xlabel('')
@@ -922,3 +958,24 @@ def compare_df_plots(df1, df2, title1=None, title2=None, y_label=None, x_label=N
     ax2.right_ax.grid(False)
     fig.tight_layout()
     plt.show()
+    
+def compute_aif_metrics(dataset_true, dataset_pred, unprivileged_groups, privileged_groups,\
+                        ret_eval_dict=True):
+
+    metrics_cls = ClassificationMetric(dataset_true, dataset_pred, 
+                                                 unprivileged_groups=unprivileged_groups,
+                                                 privileged_groups=privileged_groups)
+    metrics_dict = {}
+    metrics_dict["BA"] = 0.5*(metrics_cls.true_positive_rate()+
+                                             metrics_cls.true_negative_rate())
+    metrics_dict["SPD"] = metrics_cls.statistical_parity_difference()
+    metrics_dict["DI"] = metrics_cls.disparate_impact()
+    metrics_dict["AOD"] = metrics_cls.average_odds_difference()
+    metrics_dict["EOD"] = metrics_cls.equal_opportunity_difference()
+    metrics_dict["DFBA"] = metrics_cls.differential_fairness_bias_amplification()
+    metrics_dict["TI"] = metrics_cls.theil_index()
+    
+    if ret_eval_dict:
+        return metrics_dict, metrics_cls
+    else:
+        return metrics_cls

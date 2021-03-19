@@ -114,7 +114,8 @@
             "csvopts":{
                 "usecols":["make", "model", "year", "fuelType", "cylinders", "displ", "eng_dscr", "phevBlended", "atvType", "co2TailpipeGpm", "co2", "ghgScore", "drive", "trany", "trans_dscr", "VClass", "pv4", "lv4", "lv2", "pv2", "hlv", "hpv", "startStop", "tCharger", "comb08"],
                 "dtype":{"make":"object", "model":"object", "year":"int16", "fuelType":"object", "cylinders":"float32", "displ":"float32", "trany":"object", "drive":"object", "eng_dscr":"object", "trans_dscr":"object", "phevBlended":"bool", "co2":"int16", "ghgScore":"int16", "co2TailpipeGpm":"float32", "VClass":"object", "pv4":"int16", "lv4":"int16", "lv2":"int16", "pv2":"int16", "hlv":"int16", "hpv":"int16", "fuelCost08":"int16", "startStop":"object", "tCharger":"object", "atvType":"object", "comb08":"int16"} 
-            }
+            },
+            "prepcmds":["df.cylinders.fillna(0, inplace=True)", "df.displ.fillna(0, inplace=True)", "df.atvType.fillna('Unknown', inplace=True)", "df.drive.fillna('Unknown', inplace=True)", "df.trans_dscr.fillna('Unknown', inplace=True)", "df.startStop.fillna('Unknown', inplace=True)", "df.tCharger.fillna(0, inplace=True)", "df.tCharger.replace('T', 1, inplace=True)", "df = make_dummies_with_limits(df, 'fuelType')", "df['drive'] = df['drive'].str.replace(' Drive', '', regex=False)", "df = make_dummies_with_limits(df, 'drive')", "df['VClass'] = df['VClass'].str.replace(' -', '', regex=False)", "df = make_dummies_with_limits(df, 'VClass')", "df = make_dummies_with_limits(df, 'startStop')", "df = make_dummies_with_limits(df, 'atvType')", "df['trans_spd'] = df.trany.str.extract('(\\d+)').fillna(0).astype(np.int8)", "df = make_dummies_from_dict(df, 'trany', ['Automatic', 'Manual'])", "df = make_dummies_from_dict(df, 'eng_dscr', ['FFS','SIDI','CA model','MPFI','FFV','TRBO','350 V8','PFI','GUZZLER','SOHC','NO-CAT'])", "df = make_dummies_from_dict(df, 'trans_dscr',['Unknown','CLKUP','SIL','2MODE','Creeper','EMS','3MODE','2LKUP'])"]
         },
         {
             "name":"recidivism-risk-balanced",
@@ -122,7 +123,10 @@
             "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/recidivism-risk_balanced.csv",
             "filenames":"recidivism-risk_balanced.csv",
             "filetypes":"csv",
-            "target":"compas_score"
+            "target":"compas_score",
+            "csvopts":{
+                "dtype":{"sex":"object", "age":"int8", "race":"object", "juv_fel_count":"int8", "juv_misd_count":"int8", "juv_other_count":"int8", "priors_count":"int8", "c_charge_degree":"object", "days_b_screening_arrest":"float64", "length_of_stay":"float64", "compas_score":"int8", "is_recid":"int8"}
+            }
         },
         {
             "name":"recidivism-risk",
@@ -191,12 +195,12 @@
         {
             "name":"cc-default",
             "source":"URL",
-            "location":"http://archive.ics.uci.edu/ml/machine-learning-databases/00350/default of credit card clients.xls",
-            "filenames":"default of credit card clients.xls",
-            "filetypes":"xls",
-            "target":"default.payment.next.month",
-            "xlsopts":{
-                "skiprows":1
+            "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/cc_defaults_taiwan.csv.zip",
+            "filenames":"cc_defaults_new_taiwan.csv",
+            "filetypes":"csv",
+            "target":"IS_DEFAULT",
+            "csvopts":{
+                "dtype":{"CC_LIMIT_CAT":"int8", "EDUCATION":"int8", "MARITAL_STATUS":"int8", "GENDER":"int8", "AGE_GROUP":"int8", "pay_status_1":"int8", "pay_status_2":"int8", "pay_status_3":"int8", "pay_status_4":"int8", "pay_status_5":"int8", "pay_status_6":"int8", "IS_DEFAULT":"int8", "_AGE":"int16", "_spend":"int32", "_tpm":"int16", "_ppm":"int16", "_RETAIL":"int8", "_URBAN":"int8", "_RURAL":"int8", "_PREMIUM":"int8", "_TREATMENT":"int8", "_CC_LIMIT":"int32"}
             },
             "prepcmds":["df.set_index('ID', inplace=True)"]
         },

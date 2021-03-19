@@ -147,7 +147,6 @@ class Source:
             all_contents = []
             all_labels = []
             for split in splits:
-                #print(nkwargs['files'])
                 if 'target' in nkwargs:
                     if nkwargs['files'][0]['filetype'] == 'csv':
                         contents, labels = list(zip(*[(i['content'].drop(nkwargs['target'], axis=1), i['content'][nkwargs['target']])\

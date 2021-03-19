@@ -123,7 +123,10 @@
             "location":"https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/raw/master/datasets/recidivism-risk_balanced.csv",
             "filenames":"recidivism-risk_balanced.csv",
             "filetypes":"csv",
-            "target":"compas_score"
+            "target":"compas_score",
+            "csvopts":{
+                "dtype":{"sex":"object", "age":"int8", "race":"object", "juv_fel_count":"int8", "juv_misd_count":"int8", "juv_other_count":"int8", "priors_count":"int8", "c_charge_degree":"object", "days_b_screening_arrest":"float64", "length_of_stay":"float64", "compas_score":"int8", "is_recid":"int8"}
+            }
         },
         {
             "name":"recidivism-risk",
