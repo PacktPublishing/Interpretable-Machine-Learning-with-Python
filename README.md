@@ -42,24 +42,63 @@ With the following software and hardware list you can run all code files present
 
 ### Software and Hardware List
 
+You can install the software required in any operating system by first installing [Jupyter Notebook or Jupyter Lab](https://jupyter.readthedocs.io/en/latest/install.html) with the most recent version of Python, or install [Anaconda](https://docs.anaconda.com/anaconda/) which can install everything at once. While hardware requirements for Jupyter are relatively modest, we recommend a machine with at least 4 cores of 2Ghz and 8Gb of RAM.
+
+Alternatively, to installing the software locally, you can run the code in the cloud using Google Colab or another cloud notebook service.  
+
+Either way, the following packages are required to run the code in all the chapters (Google Colab has all the packages denoted with a ^):
+
 | Chapter  | Software required                   | OS required                        |
 | -------- | ------------------------------------| -----------------------------------|
-| 1        | R version 3.3.0                     | Windows, Mac OS X, and Linux (Any) |
-| 2        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 3        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 4        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 5        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 6        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 7        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 8        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 9        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 10        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 11        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 12        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 13        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 14        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 15        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
+| 1        | ^ Jupyter Notebook / Lab                     | Windows, Mac OS X, and Linux (Any) |
+| 2        | ^ Python 3.6+            | Windows, Mac OS X, and Linux (Any) |
+| 3        | ^ numpy 1.19.5+           | Windows, Mac OS X, and Linux (Any) |
+| 4        | ^ pandas 1.1.5+            | Windows, Mac OS X, and Linux (Any) |
+| 5        | ^ scikit-learn 0.22.2+            | Windows, Mac OS X, and Linux (Any) |
+| 6        | ^ matplotlib 3.2.2+            | Windows, Mac OS X, and Linux (Any) |
+| 7        | ^ scipy 1.4.1+            | Windows, Mac OS X, and Linux (Any) |
+| 8        | ^ beautifulsoup4 4.6.3+            | Windows, Mac OS X, and Linux (Any) |
+| 9        | ^ requests 2.23.0+            | Windows, Mac OS X, and Linux (Any) |
+| 10        | ^ statsmodels 0.10.2+            | Windows, Mac OS X, and Linux (Any) |
+| 11        | ^ seaborn 0.11.1+           | Windows, Mac OS X, and Linux (Any) |
+| 12        | ^ tqdm 4.41.1+           | Windows, Mac OS X, and Linux (Any) |
+| 13        | pathlib2 2.3.5+            | Windows, Mac OS X, and Linux (Any) |
+| 14        | ^ mlxtend 0.14.0+            | Windows, Mac OS X, and Linux (Any) |
+| 15        | pycebox 0.0.1+            | Windows, Mac OS X, and Linux (Any) |
+| 16        | alibi 0.5.5+            | Windows, Mac OS X, and Linux (Any) |
+| 17        | aif360 0.3.0+            | Windows, Mac OS X, and Linux (Any) |
+| 18        | ^ opencv-python 4.5.1+            | Windows, Mac OS X, and Linux (Any) |
+| 19        | machine-learning-datasets 0.01.16+           | Windows, Mac OS X, and Linux (Any) |
+| 20        | rulefit 0.3.1+           | Windows, Mac OS X, and Linux (Any) |
+| 21        | interpret 0.2.2+           | Windows, Mac OS X, and Linux (Any) |
+| 22        | skope-rules 1.0.1+           | Windows, Mac OS X, and Linux (Any) |
+| 23        | ^ six 1.15.0+            | Windows, Mac OS X, and Linux (Any) |
+| 24        | ^ tensorflow 2.4.1+            | Windows, Mac OS X, and Linux (Any) |
+| 25        | cvae 0.0.3+            | Windows, Mac OS X, and Linux (Any) |
+| 26        | PDPbox 0.2.0+            | Windows, Mac OS X, and Linux (Any) |
+| 27        | pycebox 0.0.1+           | Windows, Mac OS X, and Linux (Any) |
+| 28        |             | Windows, Mac OS X, and Linux (Any) |
+| 29        |             | Windows, Mac OS X, and Linux (Any) |
+| 30        |             | Windows, Mac OS X, and Linux (Any) |
 
+sklearn-genetic                    0.3.0
+                   
+
+!pip install --upgrade xgboost tensorflow keras shap 
+!pip install git+https://github.com/tensorflow/docs
+!pip install git+https://github.com/MaximeJumelle/ALEPython.git@dev#egg=alepython
+!pip install --upgrade nltk lightgbm lime
+!pip install --upgrade catboost alibi witwidget
+!pip install --upgrade opencv-python tf-explain tf-keras-vis scikit-image
+!pip install --upgrade distython SALib
+!pip install --upgrade yellowbrick mlxtend sklearn-genetic
+!pip install numba==0.49 
+!pip install --upgrade BlackBoxAuditing
+!pip install --upgrade aif360  
+!pip install --upgrade econml dowhy
+!pip install --no-deps git+https://github.com/EthicalML/xai.git
+!pip install --upgrade bayesian-optimization tensorflow-lattice graphviz pydot
+!pip install --upgrade adversarial-robustness-toolbox
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781800203907_ColorImages.pdf).
 
