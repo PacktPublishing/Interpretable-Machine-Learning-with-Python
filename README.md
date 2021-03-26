@@ -9,7 +9,7 @@ This is the code repository for [Interpretable Machine Learning with Python](htt
 ## What is this book about?
 Do you want to understand your models and mitigate the risks associated with poor predictions using practical machine learning (ML) interpretation? Interpretable Machine Learning with Python can help you overcome these challenges, using interpretation methods to build fairer and safer ML models.
 
-This book covers the following exciting features: <First 5 What you'll learn points>
+This book covers the following exciting features: 
 * Recognize the importance of interpretability in business
 * Study models that are intrinsically interpretable such as linear models, decision trees, and Naïve Bayes
 * Become well-versed in interpreting models with model-agnostic methods
