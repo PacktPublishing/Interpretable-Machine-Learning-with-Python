@@ -50,36 +50,33 @@ Either way, the following packages are required to run the code in all the chapt
 
 | Chapter  | Software required                   | OS required                        |
 | -------- | ------------------------------------| -----------------------------------|
-| 1        | ^ Jupyter Notebook / Lab                     | Windows, Mac OS X, and Linux (Any) |
-| 2        | ^ Python 3.6+            | Windows, Mac OS X, and Linux (Any) |
-| 3        | ^ numpy 1.19.5+           | Windows, Mac OS X, and Linux (Any) |
-| 4        | ^ pandas 1.1.5+            | Windows, Mac OS X, and Linux (Any) |
-| 5        | ^ scikit-learn 0.22.2+            | Windows, Mac OS X, and Linux (Any) |
-| 6        | ^ matplotlib 3.2.2+            | Windows, Mac OS X, and Linux (Any) |
-| 7        | ^ scipy 1.4.1+            | Windows, Mac OS X, and Linux (Any) |
-| 8        | ^ beautifulsoup4 4.6.3+            | Windows, Mac OS X, and Linux (Any) |
-| 9        | ^ requests 2.23.0+            | Windows, Mac OS X, and Linux (Any) |
-| 10        | ^ statsmodels 0.10.2+            | Windows, Mac OS X, and Linux (Any) |
-| 11        | ^ seaborn 0.11.1+           | Windows, Mac OS X, and Linux (Any) |
-| 12        | ^ tqdm 4.41.1+           | Windows, Mac OS X, and Linux (Any) |
-| 13        | pathlib2 2.3.5+            | Windows, Mac OS X, and Linux (Any) |
-| 14        | ^ mlxtend 0.14.0+            | Windows, Mac OS X, and Linux (Any) |
-| 15        | pycebox 0.0.1+            | Windows, Mac OS X, and Linux (Any) |
-| 16        | alibi 0.5.5+            | Windows, Mac OS X, and Linux (Any) |
-| 17        | aif360 0.3.0+            | Windows, Mac OS X, and Linux (Any) |
-| 18        | ^ opencv-python 4.5.1+            | Windows, Mac OS X, and Linux (Any) |
-| 19        | machine-learning-datasets 0.01.16+           | Windows, Mac OS X, and Linux (Any) |
-| 20        | rulefit 0.3.1+           | Windows, Mac OS X, and Linux (Any) |
-| 21        | interpret 0.2.2+           | Windows, Mac OS X, and Linux (Any) |
-| 22        | skope-rules 1.0.1+           | Windows, Mac OS X, and Linux (Any) |
-| 23        | ^ six 1.15.0+            | Windows, Mac OS X, and Linux (Any) |
-| 24        | ^ tensorflow 2.4.1+            | Windows, Mac OS X, and Linux (Any) |
-| 25        | cvae 0.0.3+            | Windows, Mac OS X, and Linux (Any) |
-| 26        | PDPbox 0.2.0+            | Windows, Mac OS X, and Linux (Any) |
-| 27        | pycebox 0.0.1+           | Windows, Mac OS X, and Linux (Any) |
-| 28        |             | Windows, Mac OS X, and Linux (Any) |
-| 29        |             | Windows, Mac OS X, and Linux (Any) |
-| 30        |             | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14      | ^ Jupyter Notebook / Lab                     | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14       | ^ Python 3.6+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14      | ^ numpy 1.19.5+           | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14  | ^ pandas 1.1.5+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14   | ^ scikit-learn 0.22.2+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14  | ^ matplotlib 3.2.2+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14   | ^ scipy 1.4.1+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14   | ^ beautifulsoup4 4.6.3+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14       | ^ requests 2.23.0+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14       | ^ statsmodels 0.10.2+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | ^ seaborn 0.11.1+           | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | ^ tqdm 4.41.1+           | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | pathlib2 2.3.5+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14       | ^ mlxtend 0.14.0+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | pycebox 0.0.1+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | alibi 0.5.5+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | aif360 0.3.0+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | ^ opencv-python 4.5.1+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | machine-learning-datasets 0.01.16+           | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | rulefit 0.3.1+           | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | interpret 0.2.2+           | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | skope-rules 1.0.1+           | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14        | ^ six 1.15.0+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14       | ^ tensorflow 2.4.1+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14       | cvae 0.0.3+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14       | PDPbox 0.2.0+            | Windows, Mac OS X, and Linux (Any) |
+| 1  - 14      | pycebox 0.0.1+           | Windows, Mac OS X, and Linux (Any) |
 
 sklearn-genetic                    0.3.0
                    
