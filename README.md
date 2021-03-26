@@ -81,21 +81,21 @@ Either way, the following packages are required to run the code in all the chapt
 sklearn-genetic                    0.3.0
                    
 
-!pip install --upgrade xgboost tensorflow keras shap 
-!pip install git+https://github.com/tensorflow/docs
-!pip install git+https://github.com/MaximeJumelle/ALEPython.git@dev#egg=alepython
-!pip install --upgrade nltk lightgbm lime
-!pip install --upgrade catboost alibi witwidget
-!pip install --upgrade opencv-python tf-explain tf-keras-vis scikit-image
-!pip install --upgrade distython SALib
-!pip install --upgrade yellowbrick mlxtend sklearn-genetic
-!pip install numba==0.49 
-!pip install --upgrade BlackBoxAuditing
-!pip install --upgrade aif360  
-!pip install --upgrade econml dowhy
-!pip install --no-deps git+https://github.com/EthicalML/xai.git
-!pip install --upgrade bayesian-optimization tensorflow-lattice graphviz pydot
-!pip install --upgrade adversarial-robustness-toolbox
+* !pip install --upgrade xgboost tensorflow keras shap 
+* !pip install git+https://github.com/tensorflow/docs
+* !pip install git+https://github.com/MaximeJumelle/ALEPython.git@dev#egg=alepython
+* !pip install --upgrade nltk lightgbm lime
+* !pip install --upgrade catboost alibi witwidget
+* !pip install --upgrade opencv-python tf-explain tf-keras-vis scikit-image
+* !pip install --upgrade distython SALib
+* !pip install --upgrade yellowbrick mlxtend sklearn-genetic
+* !pip install numba==0.49 
+* !pip install --upgrade BlackBoxAuditing
+* !pip install --upgrade aif360  
+* !pip install --upgrade econml dowhy
+* !pip install --no-deps git+https://github.com/EthicalML/xai.git
+* !pip install --upgrade bayesian-optimization tensorflow-lattice graphviz pydot
+* !pip install --upgrade adversarial-robustness-toolbox
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781800203907_ColorImages.pdf).
 
