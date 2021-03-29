@@ -127,6 +127,12 @@ Remember to make sure you click on the menu item __"File > Save a copy in Drive"
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781800203907_ColorImages.pdf).
 
+### Summary
+
+The book does much more than explain technical topics, but here's a summary of the chapters:
+
+![Chapters topics](summary.png)
+
 ### Related products <Other books you may enjoy>
 * Automated Machine Learning [[Packt]](https://www.packtpub.com/product/automated-machine-learning/9781800567689) [[Amazon]](https://www.amazon.com/dp/1800567685)
 
