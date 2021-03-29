@@ -105,6 +105,26 @@ The exact versions of each library as tested can be found in the [requirements.t
 
 should you have a dedicated environment for them.
 
+Alternatively, you can run all the code in Google Colab with the following links: 
+
+- [Chapter 01 - WeightPrediction.ipynb](https://colab.research.google.com/drive/1rO79oCPGSz-XQaE1Ikcotdn32Xkb5N7S?usp=sharing)
+- [Chapter 02 - CVD.ipynb](https://colab.research.google.com/drive/1CiUPbK_xgXFq6735O320a_3GUiuY4XGZ?usp=sharing)
+- [Chapter 03 - FlightDelays.ipynb](https://colab.research.google.com/drive/15z8dLNCzVbY7Y3Uq0GAAnSJ4nJgNmlPU?usp=sharing)
+- [Chapter 04 - BirthOrder.ipynb](https://colab.research.google.com/drive/1HZQ4nz_TrIj31-9oMgAhVVfoZKsHPs8S?usp=sharing)
+- [Chapter 05 -  FuelEfficiency.ipynb](https://colab.research.google.com/drive/1t3jdsCzSwZcaxekjOofXoBQeqkpCsbCj?usp=sharing)
+- [Chapter 06 - ChocoRatings.ipynb](https://colab.research.google.com/drive/1_BtKFK-HxJ6GZfVJ4wbDwLM3Bvc6ZXS2?usp=sharing)
+- [Chapter 07 - Recidivism_part1.ipynb](https://colab.research.google.com/drive/1xG0FexLMPKkgHKPWYst-wY7WRPpqdOfm?usp=sharing)
+- [Chapter 08 - FruitClassifier_part1.ipynb](https://colab.research.google.com/drive/1oGko32CqTQYCQo3OH_CEBEipF9svg7Gx?usp=sharing)
+- [Chapter 08 - FruitClassifier_part2.ipynb](https://colab.research.google.com/drive/1g1ZXls0KbCQol16utbSRcPgfl0fM9s-U?usp=sharing)
+- [Chapter 09 - Traffic.ipynb](https://colab.research.google.com/drive/1OZeg43hVqu1k_hjXFy5mnoBtUWnyVKFC?usp=sharing)
+- [Chapter 10 - Mailer.ipynb](https://colab.research.google.com/drive/125Ehcke4VTrJp-qECVbvYn_0GNJsgVex?usp=sharing)
+- [Chapter 11 - CreditCardDefaults.ipynb](https://colab.research.google.com/drive/13_8zsZMcgqU7V1VrpeMrqKwQgr623z6V?usp=sharing)
+- [Chapter 12 - Recidivism_part2.ipynb](https://colab.research.google.com/drive/14c95pjFgth5FLSAlzvSDnhRh9W9iDYdJ?usp=sharing)
+- [Chapter 13 - Masks_part1.ipynb](https://colab.research.google.com/drive/1qyOpum5OIY9jQJXaxkx6A6qedwb4mEzJ?usp=sharing)
+- [Chapter 13 - Masks_part2.ipynb](https://colab.research.google.com/drive/1jK9YsSgVfiD4YXYDyoQ27uLT06f-SPYZ?usp=sharing)
+
+Remember to make sure you click on the menu item __"File > Save a copy in Drive"__ as soon you open each link to ensure that your notebook is saved as you run it. 
+
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781800203907_ColorImages.pdf).
 
 ### Related products <Other books you may enjoy>
