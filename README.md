@@ -48,56 +48,56 @@ Alternatively, to installing the software locally, you can run the code in the c
 
 Either way, the following packages are required to run the code in all the chapters (Google Colab has all the packages denoted with a ^):
 
-| Chapter  | Software required                     | OS required                        |
-| -------- | --------------------------------------| -----------------------------------|
-| 1        | ^ matplotlib 3.2.2+                   | Windows, Mac OS X, and Linux (Any) |
-| 2        | ^ scikit-learn 0.22.2+                | Windows, Mac OS X, and Linux (Any) |
-| 3        | ^ pandas 1.1.5+                       | Windows, Mac OS X, and Linux (Any) |
-| 4        | machine-learning-datasets 0.01.16+    | Windows, Mac OS X, and Linux (Any) |
-| 5        | ^ numpy 1.19.5+                       | Windows, Mac OS X, and Linux (Any) |
-| 6        | ^ seaborn 0.11.1+                     | Windows, Mac OS X, and Linux (Any) |
-| 7        | ^ tensorflow 2.4.1+                   | Windows, Mac OS X, and Linux (Any) |
-| 8        | shap 0.38.1+                          | Windows, Mac OS X, and Linux (Any) |
-| 9        | ^ scipy 1.4.1+                        | Windows, Mac OS X, and Linux (Any) |
-| 10       | ^ xgboost 0.90+                       | Windows, Mac OS X, and Linux (Any) |
-| 11       | ^ lightgbm 2.2.3+                     | Windows, Mac OS X, and Linux (Any) |
-| 12       | alibi 0.5.5+                          | Windows, Mac OS X, and Linux (Any) |
-| 13       | ^ tqdm 4.41.1+                        | Windows, Mac OS X, and Linux (Any) |
-| 14       | ^ statsmodels 0.10.2+                 | Windows, Mac OS X, and Linux (Any) |
-| 15       | rulefit 0.3.1+                        | Windows, Mac OS X, and Linux (Any) |
-| 16       | lime 0.2.0.1+                         | Windows, Mac OS X, and Linux (Any) |
-| 17       | catboost 0.24.4+                      | Windows, Mac OS X, and Linux (Any) |
-| 18       | ^ Keras 2.4.3+                        | Windows, Mac OS X, and Linux (Any) |
-| 19       | ^ pydot 1.3.0+                        | Windows, Mac OS X, and Linux (Any) |
-| 20       | xai 0.0.4+                            | Windows, Mac OS X, and Linux (Any) |
-| 21       | ^ beautifulsoup4 4.6.3+               | Windows, Mac OS X, and Linux (Any) |
-| 22       | ^ requests 2.23.0+                    | Windows, Mac OS X, and Linux (Any) |
-| 23       | cvae 0.0.3+                           | Windows, Mac OS X, and Linux (Any) |
-| 24       | interpret 0.2.2+                      | Windows, Mac OS X, and Linux (Any) |
-| 25       | ^ six 1.15.0+                         | Windows, Mac OS X, and Linux (Any) |
-| 26       | skope-rules 1.0.1+                    | Windows, Mac OS X, and Linux (Any) |
-| 27       | PDPbox 0.2.0+                         | Windows, Mac OS X, and Linux (Any) |
-| 28       | pycebox 0.0.1+                        | Windows, Mac OS X, and Linux (Any) |
-| 29       | alepython 0.1+                        | Windows, Mac OS X, and Linux (Any) |
-| 30       | tensorflow-docs 0.0.02+               | Windows, Mac OS X, and Linux (Any) |
-| 31       | ^ nltk 3.2.5+                         | Windows, Mac OS X, and Linux (Any) |
-| 32       | witwidget 1.7.0+                      | Windows, Mac OS X, and Linux (Any) |
-| 33       | ^ opencv-python 4.1.2.30+             | Windows, Mac OS X, and Linux (Any) |
-| 34       | ^ scikit-image 0.16.2+                | Windows, Mac OS X, and Linux (Any) |
-| 35       | tf-explain 0.2.1+                     | Windows, Mac OS X, and Linux (Any) |
-| 36       | tf-keras-vis 0.5.5+                   | Windows, Mac OS X, and Linux (Any) |
-| 37       | SALib 1.3.12+                         | Windows, Mac OS X, and Linux (Any) |
-| 38       | distython 0.0.3+                      | Windows, Mac OS X, and Linux (Any) |
-| 39       | ^ mlxtend 0.14.0+                     | Windows, Mac OS X, and Linux (Any) |
-| 40       | sklearn-genetic 0.3.0+                | Windows, Mac OS X, and Linux (Any) |
-| 41       | aif360 0.3.0+                         | Windows, Mac OS X, and Linux (Any) |
-| 42       | dowhy 0.5.1+                          | Windows, Mac OS X, and Linux (Any) |
-| 43       | econml 0.9.0+                         | Windows, Mac OS X, and Linux (Any) |
-| 44       | ^ networkx 2.5+                       | Windows, Mac OS X, and Linux (Any) |
-| 45       | bayesian-optimization 1.2.0+          | Windows, Mac OS X, and Linux (Any) |
-| 46       | ^ graphviz 0.10.1+                    | Windows, Mac OS X, and Linux (Any) |
-| 47       | tensorflow-lattice 2.0.7+             | Windows, Mac OS X, and Linux (Any) |
-| 48       | adversarial-robustness-toolbox 1.5.0+ | Windows, Mac OS X, and Linux (Any) |
+| Chapter      | Software required                     | OS required                        |
+| ------------ | --------------------------------------| -----------------------------------|
+| 1 - 13       | ^ matplotlib 3.2.2+                   | Windows, Mac OS X, and Linux (Any) |
+| 1 - 13       | ^ scikit-learn 0.22.2+                | Windows, Mac OS X, and Linux (Any) |
+| 1 - 12       | ^ pandas 1.1.5+                       | Windows, Mac OS X, and Linux (Any) |
+| 2 - 13       | machine-learning-datasets 0.01.16+    | Windows, Mac OS X, and Linux (Any) |
+| 2 - 13       | ^ numpy 1.19.5+                       | Windows, Mac OS X, and Linux (Any) |
+| 3 - 13       | ^ seaborn 0.11.1+                     | Windows, Mac OS X, and Linux (Any) |
+| 3 - 13       | ^ tensorflow 2.4.1+                   | Windows, Mac OS X, and Linux (Any) |
+| 5 - 12       | shap 0.38.1+                          | Windows, Mac OS X, and Linux (Any) |
+| 1, 5, 10, 12 | ^ scipy 1.4.1+                        | Windows, Mac OS X, and Linux (Any) |
+| 5, 10-12     | ^ xgboost 0.90+                       | Windows, Mac OS X, and Linux (Any) |
+| 6, 11, 12    | ^ lightgbm 2.2.3+                     | Windows, Mac OS X, and Linux (Any) |
+| 7 - 9        | alibi 0.5.5+                          | Windows, Mac OS X, and Linux (Any) |
+| 10 - 13      | ^ tqdm 4.41.1+                        | Windows, Mac OS X, and Linux (Any) |
+| 2, 9         | ^ statsmodels 0.10.2+                 | Windows, Mac OS X, and Linux (Any) |
+| 3, 5         | rulefit 0.3.1+                        | Windows, Mac OS X, and Linux (Any) |
+| 6, 8         | lime 0.2.0.1+                         | Windows, Mac OS X, and Linux (Any) |
+| 7, 12        | catboost 0.24.4+                      | Windows, Mac OS X, and Linux (Any) |
+| 8, 9         | ^ Keras 2.4.3+                        | Windows, Mac OS X, and Linux (Any) |
+| 11, 12       | ^ pydot 1.3.0+                        | Windows, Mac OS X, and Linux (Any) |
+| 11, 12       | xai 0.0.4+                            | Windows, Mac OS X, and Linux (Any) |
+| 1            | ^ beautifulsoup4 4.6.3+               | Windows, Mac OS X, and Linux (Any) |
+| 1            | ^ requests 2.23.0+                    | Windows, Mac OS X, and Linux (Any) |
+| 3            | cvae 0.0.3+                           | Windows, Mac OS X, and Linux (Any) |
+| 3            | interpret 0.2.2+                      | Windows, Mac OS X, and Linux (Any) |
+| 3            | ^ six 1.15.0+                         | Windows, Mac OS X, and Linux (Any) |
+| 3            | skope-rules 1.0.1+                    | Windows, Mac OS X, and Linux (Any) |
+| 4            | PDPbox 0.2.0+                         | Windows, Mac OS X, and Linux (Any) |
+| 4            | pycebox 0.0.1+                        | Windows, Mac OS X, and Linux (Any) |
+| 5            | alepython 0.1+                        | Windows, Mac OS X, and Linux (Any) |
+| 5            | tensorflow-docs 0.0.02+               | Windows, Mac OS X, and Linux (Any) |
+| 6            | ^ nltk 3.2.5+                         | Windows, Mac OS X, and Linux (Any) |
+| 7            | witwidget 1.7.0+                      | Windows, Mac OS X, and Linux (Any) |
+| 8            | ^ opencv-python 4.1.2.30+             | Windows, Mac OS X, and Linux (Any) |
+| 8            | ^ scikit-image 0.16.2+                | Windows, Mac OS X, and Linux (Any) |
+| 8            | tf-explain 0.2.1+                     | Windows, Mac OS X, and Linux (Any) |
+| 8            | tf-keras-vis 0.5.5+                   | Windows, Mac OS X, and Linux (Any) |
+| 9            | SALib 1.3.12+                         | Windows, Mac OS X, and Linux (Any) |
+| 9            | distython 0.0.3+                      | Windows, Mac OS X, and Linux (Any) |
+| 10           | ^ mlxtend 0.14.0+                     | Windows, Mac OS X, and Linux (Any) |
+| 10           | sklearn-genetic 0.3.0+                | Windows, Mac OS X, and Linux (Any) |
+| 11           | aif360 0.3.0+                         | Windows, Mac OS X, and Linux (Any) |
+| 11           | dowhy 0.5.1+                          | Windows, Mac OS X, and Linux (Any) |
+| 11           | econml 0.9.0+                         | Windows, Mac OS X, and Linux (Any) |
+| 11           | ^ networkx 2.5+                       | Windows, Mac OS X, and Linux (Any) |
+| 12           | bayesian-optimization 1.2.0+          | Windows, Mac OS X, and Linux (Any) |
+| 12           | ^ graphviz 0.10.1+                    | Windows, Mac OS X, and Linux (Any) |
+| 12           | tensorflow-lattice 2.0.7+             | Windows, Mac OS X, and Linux (Any) |
+| 13           | adversarial-robustness-toolbox 1.5.0+ | Windows, Mac OS X, and Linux (Any) |
 
 The exact versions of each library as tested can be found in the [requirements.txt](https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/blob/master/requirements.txt) file and installed like this:
 
