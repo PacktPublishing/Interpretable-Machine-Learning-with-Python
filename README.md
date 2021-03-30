@@ -50,6 +50,7 @@ Either way, the following packages are required to run the code in all the chapt
 
 | Chapter      | Software required                     | OS required                        |
 | ------------ | --------------------------------------| -----------------------------------|
+| 1 - 13       | ^ Python 3.6+                         | Windows, Mac OS X, and Linux (Any) |
 | 1 - 13       | ^ matplotlib 3.2.2+                   | Windows, Mac OS X, and Linux (Any) |
 | 1 - 13       | ^ scikit-learn 0.22.2+                | Windows, Mac OS X, and Linux (Any) |
 | 1 - 12       | ^ pandas 1.1.5+                       | Windows, Mac OS X, and Linux (Any) |
@@ -90,7 +91,8 @@ Either way, the following packages are required to run the code in all the chapt
 | 9            | distython 0.0.3+                      | Windows, Mac OS X, and Linux (Any) |
 | 10           | ^ mlxtend 0.14.0+                     | Windows, Mac OS X, and Linux (Any) |
 | 10           | sklearn-genetic 0.3.0+                | Windows, Mac OS X, and Linux (Any) |
-| 11           | aif360 0.3.0+                         | Windows, Mac OS X, and Linux (Any) |
+| 11           | aif360==0.3.0                         | Windows, Mac OS X, and Linux (Any) |
+| 11           | BlackBoxAuditing==0.1.54              | Windows, Mac OS X, and Linux (Any) |
 | 11           | dowhy 0.5.1+                          | Windows, Mac OS X, and Linux (Any) |
 | 11           | econml 0.9.0+                         | Windows, Mac OS X, and Linux (Any) |
 | 11           | ^ networkx 2.5+                       | Windows, Mac OS X, and Linux (Any) |

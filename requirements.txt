@@ -39,6 +39,7 @@ distython==0.0.3
 mlxtend==0.14.0
 sklearn-genetic==0.3.0
 aif360==0.3.0
+BlackBoxAuditing==0.1.54
 dowhy==0.5.1
 econml==0.9.0
 networkx==2.5
