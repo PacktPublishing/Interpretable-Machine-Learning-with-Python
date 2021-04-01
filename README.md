@@ -101,7 +101,9 @@ Either way, the following packages are required to run the code in all the chapt
 | 12           | tensorflow-lattice 2.0.7+             | Windows, Mac OS X, and Linux (Any) |
 | 13           | adversarial-robustness-toolbox 1.5.0+ | Windows, Mac OS X, and Linux (Any) |
 
-The exact versions of each library as tested can be found in the [requirements.txt](https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/blob/master/requirements.txt) file and installed like this:
+**NOTE**: the library _machine-learning-datasets_ is the official name of what in the book is referred to as _mldatasets_. Due to naming conflicts, it had to be changed. 
+
+The exact versions of each library, as tested, can be found in the [requirements.txt](https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/blob/master/requirements.txt) file and installed like this:
 
 `> pip install -r requirements.txt`
 
@@ -119,13 +121,13 @@ Alternatively, you can run all the code in Google Colab with the following links
 - [Chapter 08 - FruitClassifier_part1.ipynb](https://colab.research.google.com/drive/1oGko32CqTQYCQo3OH_CEBEipF9svg7Gx?usp=sharing)
 - [Chapter 08 - FruitClassifier_part2.ipynb](https://colab.research.google.com/drive/1g1ZXls0KbCQol16utbSRcPgfl0fM9s-U?usp=sharing)
 - [Chapter 09 - Traffic.ipynb](https://colab.research.google.com/drive/1OZeg43hVqu1k_hjXFy5mnoBtUWnyVKFC?usp=sharing)
-- [Chapter 10 - Mailer.ipynb](https://colab.research.google.com/drive/125Ehcke4VTrJp-qECVbvYn_0GNJsgVex?usp=sharing)
+- [Chapter 10 - Mailer.ipynb +](https://colab.research.google.com/drive/125Ehcke4VTrJp-qECVbvYn_0GNJsgVex?usp=sharing)
 - [Chapter 11 - CreditCardDefaults.ipynb](https://colab.research.google.com/drive/13_8zsZMcgqU7V1VrpeMrqKwQgr623z6V?usp=sharing)
-- [Chapter 12 - Recidivism_part2.ipynb](https://colab.research.google.com/drive/14c95pjFgth5FLSAlzvSDnhRh9W9iDYdJ?usp=sharing)
+- [Chapter 12 - Recidivism_part2.ipynb +](https://colab.research.google.com/drive/14c95pjFgth5FLSAlzvSDnhRh9W9iDYdJ?usp=sharing)
 - [Chapter 13 - Masks_part1.ipynb](https://colab.research.google.com/drive/1qyOpum5OIY9jQJXaxkx6A6qedwb4mEzJ?usp=sharing)
-- [Chapter 13 - Masks_part2.ipynb](https://colab.research.google.com/drive/1jK9YsSgVfiD4YXYDyoQ27uLT06f-SPYZ?usp=sharing)
+- [Chapter 13 - Masks_part2.ipynb +](https://colab.research.google.com/drive/1jK9YsSgVfiD4YXYDyoQ27uLT06f-SPYZ?usp=sharing)
 
-Remember to make sure you click on the menu item __"File > Save a copy in Drive"__ as soon you open each link to ensure that your notebook is saved as you run it. 
+Remember to make sure you click on the menu item __"File > Save a copy in Drive"__ as soon you open each link to ensure that your notebook is saved as you run it. Also, notebooks denoted with plus sign (+) are relatively compute-intensive, and will take  an extremely long time to run on Google Colab but if you must go to __"Runtime > Change runtime type"__ and select __"High-RAM"__ for runtime shape. Otherwise, a better cloud enviornment or local environment is preferable.  
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781800203907_ColorImages.pdf).
 
