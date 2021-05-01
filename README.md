@@ -103,13 +103,15 @@ Either way, the following packages are required to run the code in all the chapt
 
 **NOTE**: the library _machine-learning-datasets_ is the official name of what in the book is referred to as _mldatasets_. Due to naming conflicts, it had to be changed. 
 
-The exact versions of each library, as tested, can be found in the [requirements.txt](https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/blob/master/requirements.txt) file and installed like this:
+The exact versions of each library, as tested, can be found in the [requirements.txt](https://github.com/PacktPublishing/Interpretable-Machine-Learning-with-Python/blob/master/requirements.txt) file and installed like this should you have a dedicated environment for them:
 
 `> pip install -r requirements.txt`
 
-should you have a dedicated environment for them.
+You might get some conflicts specifically with libraries `cvae`, `alepython`, `pdpbox` and `xai`. If this is the case, try:
 
-Alternatively, you can run all the code in Google Colab with the following links: 
+`> pip install --no-deps -r requirements.txt`
+
+Alternatively, you can install libraries one chapter at a time inside of a local Jupyter environment using cells with `!pip install` or run all the code in Google Colab with the following links: 
 
 - [Chapter 01 - WeightPrediction.ipynb](https://colab.research.google.com/drive/1rO79oCPGSz-XQaE1Ikcotdn32Xkb5N7S?usp=sharing)
 - [Chapter 02 - CVD.ipynb](https://colab.research.google.com/drive/1CiUPbK_xgXFq6735O320a_3GUiuY4XGZ?usp=sharing)
