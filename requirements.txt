@@ -47,3 +47,4 @@ bayesian-optimization==1.2.0
 graphviz==0.10.1
 tensorflow-lattice==2.0.7
 adversarial-robustness-toolbox==1.5.0
+lxml
