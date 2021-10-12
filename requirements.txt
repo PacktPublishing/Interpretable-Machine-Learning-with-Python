@@ -30,7 +30,7 @@ alepython @ git+https://github.com/MaximeJumelle/ALEPython.git@286350ab674980a32
 tensorflow-docs @ git+https://github.com/tensorflow/docs@2d270bdf7da20b5ccd08e15812e57a174522b3cf
 nltk==3.2.5
 witwidget==1.7.0
-opencv-python==4.1.2.30
+opencv-python==4.2.0.32
 scikit-image==0.16.2
 tf-explain==0.2.1
 tf-keras-vis==0.5.5
