@@ -19,7 +19,7 @@ Keras==2.4.3
 pydot==1.3.0
 xai @ git+https://github.com/EthicalML/xai.git@1d2e9272e1feeac9bd08e7033b53e42f9f69eae0
 beautifulsoup4==4.6.3
-requests==2.23.0
+requests==2.31.0
 cvae @ git+https://github.com/maxfrenzel/CompressionVAE.git@d35dcf2495354bc53c3c477037bc69d1ddd15d71
 interpret==0.2.2
 six==1.15.0
